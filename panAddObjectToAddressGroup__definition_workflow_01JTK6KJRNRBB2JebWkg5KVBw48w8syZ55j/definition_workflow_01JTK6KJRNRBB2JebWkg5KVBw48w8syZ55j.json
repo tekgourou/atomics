@@ -1,0 +1,141 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_01JTK6KJRNRBB2JebWkg5KVBw48w8syZ55j",
+    "name": "PAN - Add Object to Address Groups",
+    "title": "PAN - Add Object to Address Groups",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "GroupName",
+          "type": "datatype.string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01JTK6KJGOMLG6KmHEP4ovE9Bwazxsc0Nst",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "object",
+          "type": "datatype.string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01JTK6XW3BNE17jQvdby7qVsLjjpbnPIQEW",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "API_key",
+          "type": "datatype.string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01JTK6KJGOJ4D1n3fzww6b7o2WVGGRj1E86",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "JSON_output",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01JTK6KJGONWV5UxWxD3TLQ67H5CGZYKSF4",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "atomic_group": "PaloAlto Network",
+        "is_atomic": true
+      },
+      "delete_workflow_instance": false,
+      "display_name": "PAN - Add Object to Address Groups",
+      "runtime_user": {
+        "override_target_runtime_user": false,
+        "specify_on_workflow_start": false,
+        "target_default": true
+      },
+      "target": {
+        "target_type": "web-service.endpoint",
+        "specify_on_workflow_start": true
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_01JTK6LARG0H54MTI5F2fGcg1jNmcF02GIK",
+        "name": "HTTP Request",
+        "title": "HTTP Request",
+        "type": "web-service.http_request",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "allow_auto_redirect": true,
+          "body": "{\n    \"entry\": [\n            {\n                \"@name\": \"$workflow.definition_workflow_01JTK6KJRNRBB2JebWkg5KVBw48w8syZ55j.input.variable_workflow_01JTK6KJGOMLG6KmHEP4ovE9Bwazxsc0Nst$\",\n                \"@location\": \"vsys\",\n                \"@vsys\": \"vsys1\",\n                \"static\": {\n                    \"member\": [\n                        \"$workflow.definition_workflow_01JTK6KJRNRBB2JebWkg5KVBw48w8syZ55j.input.variable_workflow_01JTK6XW3BNE17jQvdby7qVsLjjpbnPIQEW$\"\n                    ]\n                }\n            }\n        ]\n}",
+          "content_type": "application/json",
+          "continue_on_error_status_code": false,
+          "continue_on_failure": false,
+          "custom_headers": [
+            {
+              "name": "X-PAN-KEY",
+              "value": "$workflow.definition_workflow_01JTK6KJRNRBB2JebWkg5KVBw48w8syZ55j.input.variable_workflow_01JTK6KJGOJ4D1n3fzww6b7o2WVGGRj1E86$"
+            }
+          ],
+          "display_name": "HTTP Request",
+          "method": "PUT",
+          "relative_url": "restapi/v10.0/Objects/AddressGroups?location=vsys\u0026vsys=vsys1\u0026name=$workflow.definition_workflow_01JTK6KJRNRBB2JebWkg5KVBw48w8syZ55j.input.variable_workflow_01JTK6KJGOMLG6KmHEP4ovE9Bwazxsc0Nst$",
+          "runtime_user": {
+            "override_target_runtime_user": false,
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "override_workflow_target": false,
+            "override_workflow_target_group_criteria": false,
+            "use_workflow_target": true,
+            "use_workflow_target_group": false
+          }
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_01JTK6LL6MQYP1N659QcBxU2JsPEoEgQfPg",
+        "name": "Set Variables",
+        "title": "Set Variables",
+        "type": "core.set_multiple_variables",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Set Variables",
+          "skip_execution": false,
+          "variables_to_update": [
+            {
+              "variable_to_update": "$workflow.definition_workflow_01JTK6KJRNRBB2JebWkg5KVBw48w8syZ55j.output.variable_workflow_01JTK6KJGONWV5UxWxD3TLQ67H5CGZYKSF4$",
+              "variable_value_new": "$activity.definition_activity_01JTK6LARG0H54MTI5F2fGcg1jNmcF02GIK.output.response_body$"
+            }
+          ]
+        },
+        "object_type": "definition_activity"
+      }
+    ],
+    "categories": [
+      "category_1BMfMXSnJMyt5Ihqi7rWJr5N8cf"
+    ]
+  }
+}
