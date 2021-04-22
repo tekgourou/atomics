@@ -10,13 +10,13 @@
         "schema_id": "datatype.string",
         "properties": {
           "value": "",
-          "scope": "output",
-          "name": "API_key",
+          "scope": "input",
+          "name": "username",
           "type": "datatype.string",
-          "is_required": false,
+          "is_required": true,
           "is_invisible": false
         },
-        "unique_name": "variable_workflow_01JSLS5IGO64P2di94pFEMnIkr5zVh5Egwe",
+        "unique_name": "variable_workflow_01NXKCU91UVVN3RQy895IQVt02BjHUUiKGQ",
         "object_type": "variable_workflow"
       },
       {
@@ -36,19 +36,19 @@
         "schema_id": "datatype.string",
         "properties": {
           "value": "",
-          "scope": "input",
-          "name": "username",
+          "scope": "output",
+          "name": "API_key",
           "type": "datatype.string",
-          "is_required": true,
+          "is_required": false,
           "is_invisible": false
         },
-        "unique_name": "variable_workflow_01NXKCU91UVVN3RQy895IQVt02BjHUUiKGQ",
+        "unique_name": "variable_workflow_01JSLS5IGO64P2di94pFEMnIkr5zVh5Egwe",
         "object_type": "variable_workflow"
       }
     ],
     "properties": {
       "atomic": {
-        "atomic_group": "PaloAlto Nertwork",
+        "atomic_group": "PaloAlto Network",
         "is_atomic": true
       },
       "delete_workflow_instance": false,
