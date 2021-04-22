@@ -1,0 +1,114 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_01JTKELIYLG8F3dTjkvyyciqCSfcVcyMhwC",
+    "name": "PAN - Commit Change",
+    "title": "PAN - Commit Change",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "API_key",
+          "type": "datatype.string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01JTKELINQVUH4p45fcuu3WLEfsXlzyHp0k",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "JSON_output",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01JTKELINQZMX0r15mYMZXbeWYQpLcaIdT1",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "atomic_group": "PaloAlto Network",
+        "is_atomic": true
+      },
+      "delete_workflow_instance": false,
+      "display_name": "PAN - Commit Change",
+      "runtime_user": {
+        "override_target_runtime_user": false,
+        "specify_on_workflow_start": false,
+        "target_default": true
+      },
+      "target": {
+        "target_type": "web-service.endpoint",
+        "specify_on_workflow_start": true
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_01JTKEM83MXG23qAPkqDamR9EgDBurBMs9f",
+        "name": "HTTP Request",
+        "title": "HTTP Request",
+        "type": "web-service.http_request",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "allow_auto_redirect": true,
+          "content_type": "application/json",
+          "continue_on_error_status_code": false,
+          "continue_on_failure": false,
+          "custom_headers": [
+            {
+              "name": "X-PAN-KEY",
+              "value": "$workflow.definition_workflow_01JTKELIYLG8F3dTjkvyyciqCSfcVcyMhwC.input.variable_workflow_01JTKELINQVUH4p45fcuu3WLEfsXlzyHp0k$"
+            }
+          ],
+          "display_name": "HTTP Request",
+          "method": "GET",
+          "relative_url": "/api/?type=commit\u0026cmd=\u003ccommit\u003e\u003c/commit\u003e",
+          "runtime_user": {
+            "override_target_runtime_user": false,
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "override_workflow_target": false,
+            "override_workflow_target_group_criteria": false,
+            "use_workflow_target": true,
+            "use_workflow_target_group": false
+          }
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_01JTKEMI5O72U4EASwbrjTNiqfWKDgbPmTS",
+        "name": "Set Variables",
+        "title": "Set Variables",
+        "type": "core.set_multiple_variables",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Set Variables",
+          "skip_execution": false,
+          "variables_to_update": [
+            {
+              "variable_to_update": "$workflow.definition_workflow_01JTKELIYLG8F3dTjkvyyciqCSfcVcyMhwC.output.variable_workflow_01JTKELINQZMX0r15mYMZXbeWYQpLcaIdT1$",
+              "variable_value_new": "$activity.definition_activity_01JTKEM83MXG23qAPkqDamR9EgDBurBMs9f.output.response_body$"
+            }
+          ]
+        },
+        "object_type": "definition_activity"
+      }
+    ],
+    "categories": [
+      "category_1BMfMXSnJMyt5Ihqi7rWJr5N8cf"
+    ]
+  }
+}
