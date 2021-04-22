@@ -1,0 +1,141 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_01JTJBY7BJ9OE5L7Qb6mjVauy6jSruHuIvo",
+    "name": "PAN - Create Object Address IP",
+    "title": "PAN - Create Object Address IP",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "API_key",
+          "type": "datatype.string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01JTJBY71BBOE1SNZ7tbrJ0s6jXEQi8uftf",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "ip",
+          "type": "datatype.string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01JTJD4OKMU3O4nR2ythnOnGyKo78dG6AjF",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "JSON_output",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01JTJBY71BFAC0n5vaBSxCTV1xwZQDmn7Mn",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "ObjectName",
+          "type": "datatype.string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01JTKIDIIWRXU1ksW5axaUtO7xEANVqEEWL",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "atomic_group": "PaloAlto Network",
+        "is_atomic": true
+      },
+      "delete_workflow_instance": false,
+      "display_name": "PAN - Create Object Address IP",
+      "runtime_user": {
+        "override_target_runtime_user": false,
+        "specify_on_workflow_start": false,
+        "target_default": true
+      },
+      "target": {
+        "target_type": "web-service.endpoint",
+        "specify_on_workflow_start": true
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_01JTJBZ3LHKXZ28A9njhX3vY1d5s4W5MpT3",
+        "name": "HTTP Request",
+        "title": "HTTP Request",
+        "type": "web-service.http_request",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "allow_auto_redirect": true,
+          "body": "{\n\t\"entry\": [\n\t\t\t{\n\t\t\t  \"@name\": \"$workflow.definition_workflow_01JTJBY7BJ9OE5L7Qb6mjVauy6jSruHuIvo.input.variable_workflow_01JTKIDIIWRXU1ksW5axaUtO7xEANVqEEWL$\",\n\t\t\t  \"@location\": \"shared\",\n\t\t\t  \"ip-netmask\": \"$workflow.definition_workflow_01JTJBY7BJ9OE5L7Qb6mjVauy6jSruHuIvo.input.variable_workflow_01JTJD4OKMU3O4nR2ythnOnGyKo78dG6AjF$\",\n\t\t\t   \"description\": \"Created By Cisco SecureX - $workflow.definition_workflow_01JTJBY7BJ9OE5L7Qb6mjVauy6jSruHuIvo.output.start_time$\"\n\t\t\t\t\t}\n\t\t\t]\n}",
+          "content_type": "application/json",
+          "continue_on_error_status_code": false,
+          "continue_on_failure": false,
+          "custom_headers": [
+            {
+              "name": "X-PAN-KEY",
+              "value": "$workflow.definition_workflow_01JTJBY7BJ9OE5L7Qb6mjVauy6jSruHuIvo.input.variable_workflow_01JTJBY71BBOE1SNZ7tbrJ0s6jXEQi8uftf$"
+            }
+          ],
+          "display_name": "HTTP Request",
+          "method": "POST",
+          "relative_url": "restapi/v10.0/Objects/Addresses?location=vsys\u0026vsys=vsys1\u0026name=$workflow.definition_workflow_01JTJBY7BJ9OE5L7Qb6mjVauy6jSruHuIvo.input.variable_workflow_01JTKIDIIWRXU1ksW5axaUtO7xEANVqEEWL$",
+          "runtime_user": {
+            "override_target_runtime_user": false,
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "override_workflow_target": false,
+            "override_workflow_target_group_criteria": false,
+            "use_workflow_target": true,
+            "use_workflow_target_group": false
+          }
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_01JTJBZDD3CHD03OdbhbhSY4rRllRbokygL",
+        "name": "Set Variables",
+        "title": "Set Variables",
+        "type": "core.set_multiple_variables",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Set Variables",
+          "skip_execution": false,
+          "variables_to_update": [
+            {
+              "variable_to_update": "$workflow.definition_workflow_01JTJBY7BJ9OE5L7Qb6mjVauy6jSruHuIvo.output.variable_workflow_01JTJBY71BFAC0n5vaBSxCTV1xwZQDmn7Mn$",
+              "variable_value_new": "$activity.definition_activity_01JTJBZ3LHKXZ28A9njhX3vY1d5s4W5MpT3.output.response_body$"
+            }
+          ]
+        },
+        "object_type": "definition_activity"
+      }
+    ],
+    "categories": [
+      "category_1BMfMXSnJMyt5Ihqi7rWJr5N8cf"
+    ]
+  }
+}
