@@ -1,0 +1,156 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_01JW29ZSO0GJT7JvK1H3ThAYqfkECqKqQ8U",
+    "name": "Azure -Delete mail ID",
+    "title": "Azure -Delete mail ID",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "json_output",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01JW29ZSCQAR67kP95EToS99TrONQQKKkft",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "user_id",
+          "type": "datatype.string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01JW29ZSCQ8FY4J2erS8v0eyvmtSfz13aFe",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.secure_string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "azure_token",
+          "type": "datatype.secure_string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01JW29ZSCQ9M21jUzzMa5y2RP2CL7P0OPUB",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "mail_id",
+          "type": "datatype.string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01JW29ZSCQ73D6Sz1KHA7eonjy9XzlZakJC",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "http_request_error_message",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01JW29ZSCQ2JJ35kQjgCQZ4JSe84JNE6jNx",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "atomic_group": "Microsoft Azure",
+        "is_atomic": true
+      },
+      "delete_workflow_instance": false,
+      "display_name": "Azure -Delete mail ID",
+      "runtime_user": {
+        "override_target_runtime_user": false,
+        "specify_on_workflow_start": false,
+        "target_default": true
+      },
+      "target": {
+        "target_type": "web-service.endpoint",
+        "specify_on_workflow_start": true
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_01JW2A0L8TVFX0dAwcGsNZT07ZjNrscA8Fe",
+        "name": "HTTP Request",
+        "title": "HTTP Request",
+        "type": "web-service.http_request",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "allow_auto_redirect": true,
+          "continue_on_error_status_code": false,
+          "continue_on_failure": false,
+          "custom_headers": [
+            {
+              "name": "Authorization",
+              "value": "Bearer $workflow.definition_workflow_01JW29ZSO0GJT7JvK1H3ThAYqfkECqKqQ8U.input.variable_workflow_01JW29ZSCQ9M21jUzzMa5y2RP2CL7P0OPUB$"
+            }
+          ],
+          "display_name": "HTTP Request",
+          "method": "DELETE",
+          "relative_url": "/users/$workflow.definition_workflow_01JW29ZSO0GJT7JvK1H3ThAYqfkECqKqQ8U.input.variable_workflow_01JW29ZSCQ8FY4J2erS8v0eyvmtSfz13aFe$/messages/$workflow.definition_workflow_01JW29ZSO0GJT7JvK1H3ThAYqfkECqKqQ8U.input.variable_workflow_01JW29ZSCQ73D6Sz1KHA7eonjy9XzlZakJC$",
+          "runtime_user": {
+            "override_target_runtime_user": false,
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "override_workflow_target": false,
+            "override_workflow_target_group_criteria": false,
+            "use_workflow_target": true,
+            "use_workflow_target_group": false
+          }
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_01JW2A0VG1SY74uXVo9hu7hu2qBZISz2qFf",
+        "name": "Set Variables",
+        "title": "Set Variables",
+        "type": "core.set_multiple_variables",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Set Variables",
+          "skip_execution": false,
+          "variables_to_update": [
+            {
+              "variable_to_update": "$workflow.definition_workflow_01JW29ZSO0GJT7JvK1H3ThAYqfkECqKqQ8U.output.variable_workflow_01JW29ZSCQAR67kP95EToS99TrONQQKKkft$",
+              "variable_value_new": "$activity.definition_activity_01JW2A0L8TVFX0dAwcGsNZT07ZjNrscA8Fe.output.response_body$"
+            },
+            {
+              "variable_to_update": "$workflow.definition_workflow_01JW29ZSO0GJT7JvK1H3ThAYqfkECqKqQ8U.output.variable_workflow_01JW29ZSCQ2JJ35kQjgCQZ4JSe84JNE6jNx$",
+              "variable_value_new": "$activity.definition_activity_01JW2A0L8TVFX0dAwcGsNZT07ZjNrscA8Fe.output.error.message$"
+            }
+          ]
+        },
+        "object_type": "definition_activity"
+      }
+    ],
+    "categories": [
+      "category_1BMfMXSnJMyt5Ihqi7rWJr5N8cf"
+    ]
+  }
+}
