@@ -1,0 +1,292 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_01MYGYCNSW2O602mEJxwKOyii98GCEcxJxN",
+    "name": "Azure - Computer Vision OCR",
+    "title": "Azure - Computer Vision OCR",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "text",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01NQL2CR5LJUO2mL44dZqckMQiojrTNS3Dc",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.file",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "file to be analyze",
+          "type": "datatype.file",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01NKRXMIE1W724RShpZ0K0TXEWmpSCaMblB",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.secure_string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "Ocp-Apim-Subscription-Key",
+          "type": "datatype.secure_string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01NQLY37IJ7NU1ZrEOUjqOKC28HFebGNg3I",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "language",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01NQQ0JUPQPRF3YpQGXpdZAyK06l8OaGSxG",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.integer",
+        "properties": {
+          "value": 0,
+          "scope": "output",
+          "name": "words_count",
+          "type": "datatype.integer",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01NQUUA1GE4B67RBLa7LczAQTmJzSCsbYGz",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "text_array",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01NRJ1C09HBSK2SljRLfJqOEncL0sgsaPAH",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "atomic_group": "Microsoft Azure",
+        "is_atomic": true
+      },
+      "delete_workflow_instance": false,
+      "display_name": "Azure - Computer Vision OCR",
+      "runtime_user": {
+        "override_target_runtime_user": false,
+        "specify_on_workflow_start": false,
+        "target_default": true
+      },
+      "target": {
+        "target_type": "web-service.endpoint",
+        "specify_on_workflow_start": true
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_01NMB449XTEBQ0osSa3tHHjDTZSlhQBcuII",
+        "name": "Upload File",
+        "title": "Upload File to Microsoft Vision OCR form-data",
+        "type": "email.upload_file",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "continue_on_failure": false,
+          "display_name": "Upload File to Microsoft Vision OCR form-data",
+          "http_request": {
+            "allow_auto_redirect": true,
+            "body_data": {
+              "body_type": "form-data",
+              "form_data": [
+                {
+                  "key_type": "file",
+                  "path": "$workflow.definition_workflow_01MYGYCNSW2O602mEJxwKOyii98GCEcxJxN.input.variable_workflow_01NKRXMIE1W724RShpZ0K0TXEWmpSCaMblB$"
+                }
+              ]
+            },
+            "continue_on_error_status_code": false,
+            "custom_headers": [
+              {
+                "name": "Ocp-Apim-Subscription-Key",
+                "value": "$workflow.definition_workflow_01MYGYCNSW2O602mEJxwKOyii98GCEcxJxN.input.variable_workflow_01NQLY37IJ7NU1ZrEOUjqOKC28HFebGNg3I$"
+              }
+            ],
+            "method": "POST",
+            "relative_url": "v3.1/ocr"
+          },
+          "runtime_user": {
+            "override_target_runtime_user": false,
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "use_workflow_target": true
+          },
+          "target_type": "web-service.endpoint"
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_01NLJXZU9JU373Amh7ph4HnC54CYk19WLRr",
+        "name": "JSONPath Query",
+        "title": "JSONPath Query for Response Boby",
+        "type": "corejava.jsonpathquery",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "continue_on_failure": false,
+          "display_name": "JSONPath Query for Response Boby",
+          "input_json": "$activity.definition_activity_01NMB449XTEBQ0osSa3tHHjDTZSlhQBcuII.output.response_body$",
+          "jsonpath_queries": [
+            {
+              "jsonpath_query": "$.response_body",
+              "jsonpath_query_name": "response_body",
+              "jsonpath_query_type": "string"
+            }
+          ],
+          "skip_execution": false
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_01NMCG160TNHT1pZ9MTpNBrPSGUfGON5Goq",
+        "name": "Execute Python Script",
+        "title": "Create a JSON with the Response Body",
+        "type": "python3.script",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "continue_on_failure": false,
+          "display_name": "Create a JSON with the Response Body",
+          "script": "import sys,json\n\nouterJson = json.loads(sys.argv[1])\ninnerJson = outerJson[\"response_body\"]",
+          "script_arguments": [
+            "$activity.definition_activity_01NMB449XTEBQ0osSa3tHHjDTZSlhQBcuII.output.response_body$"
+          ],
+          "script_queries": [
+            {
+              "script_query": "innerJson",
+              "script_query_name": "innerJson",
+              "script_query_type": "string"
+            }
+          ],
+          "skip_execution": false
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_01NRIB8WQW72S1V3AfBQHCJJ6QUCNAcUFIx",
+        "name": "JSONPath Query",
+        "title": "JSONPath Query",
+        "type": "corejava.jsonpathquery",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "continue_on_failure": false,
+          "display_name": "JSONPath Query",
+          "input_json": "$activity.definition_activity_01NMCG160TNHT1pZ9MTpNBrPSGUfGON5Goq.output.script_queries.innerJson$",
+          "jsonpath_queries": [
+            {
+              "jsonpath_query": "$.regions.[*].lines.[*].words.[*].text",
+              "jsonpath_query_name": "text",
+              "jsonpath_query_type": "string"
+            },
+            {
+              "jsonpath_query": "$.language",
+              "jsonpath_query_name": "language",
+              "jsonpath_query_type": "string"
+            },
+            {
+              "jsonpath_query": "$.orientation",
+              "jsonpath_query_name": "orientation",
+              "jsonpath_query_type": "string"
+            }
+          ],
+          "skip_execution": false
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_01NRIWSE3WX6E6ZvawiKfylPwRDPknJftXg",
+        "name": "Execute Python Script",
+        "title": "Execute Python Script",
+        "type": "python3.script",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "continue_on_failure": false,
+          "display_name": "Execute Python Script",
+          "script": "text_array = $activity.definition_activity_01NRIB8WQW72S1V3AfBQHCJJ6QUCNAcUFIx.output.jsonpath_queries.text$\ntext = ''\nwords_count = 0\nfor word in text_array:\n    text = text +' '+ word\n    words_count = words_count + 1",
+          "script_queries": [
+            {
+              "script_query": "text",
+              "script_query_name": "text",
+              "script_query_type": "string"
+            },
+            {
+              "script_query": "words_count",
+              "script_query_name": "words_count",
+              "script_query_type": "integer"
+            }
+          ],
+          "skip_execution": false
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_01NQQ0NWT2XQX24bgDb0hsY7KlZUEVa1PLM",
+        "name": "Set Variables",
+        "title": "Set output Variables",
+        "type": "core.set_multiple_variables",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Set output Variables",
+          "skip_execution": false,
+          "variables_to_update": [
+            {
+              "variable_to_update": "$workflow.definition_workflow_01MYGYCNSW2O602mEJxwKOyii98GCEcxJxN.output.variable_workflow_01NQQ0JUPQPRF3YpQGXpdZAyK06l8OaGSxG$",
+              "variable_value_new": "$activity.definition_activity_01NRIB8WQW72S1V3AfBQHCJJ6QUCNAcUFIx.output.jsonpath_queries.language$"
+            },
+            {
+              "variable_to_update": "$workflow.definition_workflow_01MYGYCNSW2O602mEJxwKOyii98GCEcxJxN.output.variable_workflow_01NQL2CR5LJUO2mL44dZqckMQiojrTNS3Dc$",
+              "variable_value_new": "$activity.definition_activity_01NRIWSE3WX6E6ZvawiKfylPwRDPknJftXg.output.script_queries.text$"
+            },
+            {
+              "variable_to_update": "$workflow.definition_workflow_01MYGYCNSW2O602mEJxwKOyii98GCEcxJxN.output.variable_workflow_01NRJ1C09HBSK2SljRLfJqOEncL0sgsaPAH$",
+              "variable_value_new": "$activity.definition_activity_01NRIB8WQW72S1V3AfBQHCJJ6QUCNAcUFIx.output.jsonpath_queries.text$"
+            },
+            {
+              "variable_to_update": "$workflow.definition_workflow_01MYGYCNSW2O602mEJxwKOyii98GCEcxJxN.output.variable_workflow_01NQUUA1GE4B67RBLa7LczAQTmJzSCsbYGz$",
+              "variable_value_new": "$activity.definition_activity_01NRIWSE3WX6E6ZvawiKfylPwRDPknJftXg.output.script_queries.words_count$"
+            }
+          ]
+        },
+        "object_type": "definition_activity"
+      }
+    ],
+    "categories": [
+      "category_1BMfMXSnJMyt5Ihqi7rWJr5N8cf"
+    ]
+  }
+}
