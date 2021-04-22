@@ -1,0 +1,153 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_01JSLQ462A5GL12xKAiC6trzq3vasY7OfUX",
+    "name": "PAN- Get API key",
+    "title": "PAN- Get API key",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "API_key",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01JSLS5IGO64P2di94pFEMnIkr5zVh5Egwe",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.secure_string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "password",
+          "type": "datatype.secure_string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01NXKD4GQSP6I2mFCmpjQK6Oudlp6Z16q0I",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "username",
+          "type": "datatype.string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01NXKCU91UVVN3RQy895IQVt02BjHUUiKGQ",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "atomic_group": "PaloAlto Nertwork",
+        "is_atomic": true
+      },
+      "delete_workflow_instance": false,
+      "display_name": "PAN- Get API key",
+      "runtime_user": {
+        "override_target_runtime_user": false,
+        "specify_on_workflow_start": false,
+        "target_default": true
+      },
+      "target": {
+        "target_type": "web-service.endpoint",
+        "specify_on_workflow_start": true
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_01JSLRBS6F0GC3et9t13cxbHtfA6F2HCSCY",
+        "name": "HTTP Request",
+        "title": "HTTP Request",
+        "type": "web-service.http_request",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "allow_auto_redirect": true,
+          "continue_on_error_status_code": false,
+          "continue_on_failure": false,
+          "display_name": "HTTP Request",
+          "method": "POST",
+          "relative_url": "/api/?type=keygen\u0026user=$workflow.definition_workflow_01JSLQ462A5GL12xKAiC6trzq3vasY7OfUX.input.variable_workflow_01NXKCU91UVVN3RQy895IQVt02BjHUUiKGQ$\u0026password=$workflow.definition_workflow_01JSLQ462A5GL12xKAiC6trzq3vasY7OfUX.input.variable_workflow_01NXKD4GQSP6I2mFCmpjQK6Oudlp6Z16q0I$",
+          "runtime_user": {
+            "override_target_runtime_user": false,
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "use_workflow_target": true
+          }
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_01JSLSRGDAI7B291QlPtXf2RO4aHXYEKRyM",
+        "name": "Convert Xml to Json",
+        "title": "Convert Xml to Json",
+        "type": "core.xml2json",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Convert Xml to Json",
+          "input_xml": "$activity.definition_activity_01JSLRBS6F0GC3et9t13cxbHtfA6F2HCSCY.output.response_body$",
+          "skip_execution": false
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_01JSLSYYBZVVK3IetNfeUN7RvTYNhliJZTc",
+        "name": "JSONPath Query",
+        "title": "JSONPath Query",
+        "type": "corejava.jsonpathquery",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "continue_on_failure": false,
+          "display_name": "JSONPath Query",
+          "input_json": "$activity.definition_activity_01JSLSRGDAI7B291QlPtXf2RO4aHXYEKRyM.output.output_json$",
+          "jsonpath_queries": [
+            {
+              "jsonpath_query": "$.response.result.key",
+              "jsonpath_query_name": "key",
+              "jsonpath_query_type": "string"
+            }
+          ],
+          "skip_execution": false
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_01JSLS9669G2O4hHrflxITMNq3986uCeaSq",
+        "name": "Set Variables",
+        "title": "Set Variables",
+        "type": "core.set_multiple_variables",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Set Variables",
+          "skip_execution": false,
+          "variables_to_update": [
+            {
+              "variable_to_update": "$workflow.definition_workflow_01JSLQ462A5GL12xKAiC6trzq3vasY7OfUX.output.variable_workflow_01JSLS5IGO64P2di94pFEMnIkr5zVh5Egwe$",
+              "variable_value_new": "$activity.definition_activity_01JSLSYYBZVVK3IetNfeUN7RvTYNhliJZTc.output.jsonpath_queries.key$"
+            }
+          ]
+        },
+        "object_type": "definition_activity"
+      }
+    ],
+    "categories": [
+      "category_1BMfMXSnJMyt5Ihqi7rWJr5N8cf"
+    ]
+  }
+}
