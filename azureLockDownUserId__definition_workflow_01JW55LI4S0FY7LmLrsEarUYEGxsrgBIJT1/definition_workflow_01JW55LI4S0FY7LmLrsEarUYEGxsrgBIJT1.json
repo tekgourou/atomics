@@ -1,0 +1,145 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_01JW55LI4S0FY7LmLrsEarUYEGxsrgBIJT1",
+    "name": "Azure - Lock down user (ID)",
+    "title": "Azure - Lock down user (ID)",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "id",
+          "type": "datatype.string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01JW56BSSUF565G81fevvzmEczrERxwHRTN",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "http_request_error_message",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01JW55LHTRI4450OEhKOTqD4w5v6oWm3kZG",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "users_json_output",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01JW55LHTRDNO31KEKO9Ys6i9ipdpLj8ED4",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.secure_string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "azure_token",
+          "type": "datatype.secure_string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01JW55LHTRJFG5R88F585YflVXMUucesnfy",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "atomic_group": "Microsoft Azure",
+        "is_atomic": true
+      },
+      "delete_workflow_instance": false,
+      "display_name": "Azure - Lock down user (ID)",
+      "runtime_user": {
+        "override_target_runtime_user": false,
+        "specify_on_workflow_start": false,
+        "target_default": true
+      },
+      "target": {
+        "target_type": "web-service.endpoint",
+        "specify_on_workflow_start": true
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_01JW55M8LOUM807AZvMkyVyaPq8KOuNnoGf",
+        "name": "HTTP Request",
+        "title": "HTTP Request",
+        "type": "web-service.http_request",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "allow_auto_redirect": true,
+          "body": "{\n  \"accountEnabled\": false\n}",
+          "content_type": "application/json",
+          "continue_on_error_status_code": false,
+          "continue_on_failure": true,
+          "custom_headers": [
+            {
+              "name": "Authorization",
+              "value": "Bearer $workflow.definition_workflow_01JW55LI4S0FY7LmLrsEarUYEGxsrgBIJT1.input.variable_workflow_01JW55LHTRJFG5R88F585YflVXMUucesnfy$"
+            }
+          ],
+          "display_name": "HTTP Request",
+          "method": "PATCH",
+          "relative_url": "/users/$workflow.definition_workflow_01JW55LI4S0FY7LmLrsEarUYEGxsrgBIJT1.input.variable_workflow_01JW56BSSUF565G81fevvzmEczrERxwHRTN$",
+          "runtime_user": {
+            "override_target_runtime_user": false,
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "override_workflow_target": false,
+            "override_workflow_target_group_criteria": false,
+            "use_workflow_target": true,
+            "use_workflow_target_group": false
+          }
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_01JW55MISX3TC60HnqHDdM6jVtieQaghekq",
+        "name": "Set Variables",
+        "title": "Set Variables",
+        "type": "core.set_multiple_variables",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Set Variables",
+          "skip_execution": false,
+          "variables_to_update": [
+            {
+              "variable_to_update": "$workflow.definition_workflow_01JW55LI4S0FY7LmLrsEarUYEGxsrgBIJT1.output.variable_workflow_01JW55LHTRDNO31KEKO9Ys6i9ipdpLj8ED4$",
+              "variable_value_new": "$activity.definition_activity_01JW55M8LOUM807AZvMkyVyaPq8KOuNnoGf.output.response_body$"
+            },
+            {
+              "variable_to_update": "$workflow.definition_workflow_01JW55LI4S0FY7LmLrsEarUYEGxsrgBIJT1.output.variable_workflow_01JW55LHTRI4450OEhKOTqD4w5v6oWm3kZG$",
+              "variable_value_new": "$activity.definition_activity_01JW55M8LOUM807AZvMkyVyaPq8KOuNnoGf.output.error.message$"
+            }
+          ]
+        },
+        "object_type": "definition_activity"
+      }
+    ],
+    "categories": [
+      "category_1BMfMXSnJMyt5Ihqi7rWJr5N8cf"
+    ]
+  }
+}
