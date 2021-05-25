@@ -1,1 +1,1 @@
-# sxo-atomics
+# Cisco SecureX Orchestration Atomics Action
