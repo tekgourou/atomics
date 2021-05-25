@@ -1,0 +1,99 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_01O0VVGVQO55J612xLJQlOkIOitXf0baNBk",
+    "name": "Extract image from email (list of b64 images)",
+    "title": "Extract image from email (list of b64 images)",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "Email String",
+          "type": "datatype.string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01O0X3N6VFEUC4JS8xGMGZEZGGWUX7eDI1c",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "Images JSON",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01O0XC1LF7WW84zXPiR2BFrnt2A19uvnhqq",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "atomic_group": "Email",
+        "is_atomic": true
+      },
+      "delete_workflow_instance": false,
+      "display_name": "Extract image from email (list of b64 images)",
+      "runtime_user": {
+        "override_target_runtime_user": false,
+        "specify_on_workflow_start": false,
+        "target_default": true
+      },
+      "target": {
+        "execute_on_target_group": false,
+        "execute_on_workflow_target": false,
+        "no_target": true,
+        "specify_on_workflow_start": false
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_01O0VVU7L44557Wkczfb2nPymRMvVymsCwJ",
+        "name": "Execute Python Script",
+        "title": "Extract images b64 from raw email",
+        "type": "python3.script",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "continue_on_failure": false,
+          "display_name": "Extract images b64 from raw email",
+          "script": "from email.parser import Parser\nfrom email import policy\nimport sys\nimport json\n\ndef remove_newline(s: str) -\u003e str:\n    return s.replace(\"\\n\", \"\")\n\nmessage = Parser(policy=policy.default).parsestr(sys.argv[1])\n\nimages = []\n\nif message.get_content_maintype() == \"multipart\":\n    for part in message.walk():\n        if part.get_content_maintype() == \"image\":\n            filename = part.get_filename()\n            payload = remove_newline(part.get_payload())\n            images.append({\"name\": filename, \"image\": payload})\n\nprint(json.dumps({\"images\": images}))",
+          "script_arguments": [
+            "$workflow.definition_workflow_01O0VVGVQO55J612xLJQlOkIOitXf0baNBk.input.variable_workflow_01O0X3N6VFEUC4JS8xGMGZEZGGWUX7eDI1c$"
+          ],
+          "skip_execution": false
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_01O0XC72U5VUB41EihInPD4CjZS0lL7FCUo",
+        "name": "Set Variables",
+        "title": "Set Images JSON list as output",
+        "type": "core.set_multiple_variables",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Set Images JSON list as output",
+          "skip_execution": false,
+          "variables_to_update": [
+            {
+              "variable_to_update": "$workflow.definition_workflow_01O0VVGVQO55J612xLJQlOkIOitXf0baNBk.output.variable_workflow_01O0XC1LF7WW84zXPiR2BFrnt2A19uvnhqq$",
+              "variable_value_new": "$activity.definition_activity_01O0VVU7L44557Wkczfb2nPymRMvVymsCwJ.output.response_body$"
+            }
+          ]
+        },
+        "object_type": "definition_activity"
+      }
+    ],
+    "categories": [
+      "category_1BMfMXSnJMyt5Ihqi7rWJr5N8cf"
+    ]
+  }
+}
