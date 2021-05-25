@@ -1,0 +1,315 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_01KI0SSLGUIJ842vuUTTjgDEsfOggvEk9Ox",
+    "name": "ISE Shut_down Enpoint",
+    "title": "ISE Shut_down Enpoint",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "Shut_down",
+          "scope": "input",
+          "name": "policyName",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01KI0SSL50HQ01UlhEGbbimYw5aR87iusPE",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "IP/MAC Address",
+          "type": "datatype.string",
+          "description": "Enter a valid ip/mac address:\nEx: \nip - 1.1.1.1\nmac - 00:01:00:01:01:05",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01KI0SSL50M6G6v166OWeUD0GkD2aAvpchT",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "local",
+          "name": "Request Body",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01KI0SSL50NGO3ijXECbqfucQ6YmbeiBWqO",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "atomic_group": "Cisco ISE",
+        "is_atomic": true
+      },
+      "delete_workflow_instance": true,
+      "description": "This atomic Shut_down Endpoint by IpAddress or MACAddress.\n\naargeris@cisco.com",
+      "display_name": "ISE Shut_down Enpoint",
+      "runtime_user": {
+        "override_target_runtime_user": false,
+        "specify_on_workflow_start": false,
+        "target_default": true
+      },
+      "target": {
+        "target_type": "web-service.endpoint",
+        "specify_on_workflow_start": true
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_01KI0ST16JCO34iP615LGpSs8ZiEs90eLkN",
+        "name": "Match Regex",
+        "title": "Check Input Address",
+        "type": "core.matchregex",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Check Input Address",
+          "input_regex": "(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$",
+          "input_string": "$workflow.definition_workflow_01KI0SSLGUIJ842vuUTTjgDEsfOggvEk9Ox.input.variable_workflow_01KI0SSL50M6G6v166OWeUD0GkD2aAvpchT$",
+          "skip_execution": false
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_01KI0ST8G05SE51MQUhp4gGfgod31GXFJZo",
+        "name": "Condition Block",
+        "title": "Set Request Body",
+        "type": "logic.if_else",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Set Request Body",
+          "skip_execution": false
+        },
+        "object_type": "definition_activity",
+        "blocks": [
+          {
+            "unique_name": "definition_activity_01KI0STGBC5UX5icIhRgWoo2IOfn07yZiy2",
+            "name": "Condition Branch",
+            "title": "IP Address",
+            "type": "logic.condition_block",
+            "base_type": "activity",
+            "properties": {
+              "condition": {
+                "left_operand": "$activity.definition_activity_01KI0ST16JCO34iP615LGpSs8ZiEs90eLkN.output.has_match$",
+                "operator": "eq",
+                "right_operand": true
+              },
+              "continue_on_failure": false,
+              "display_name": "IP Address",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_01KI0STL376R744mLaDhwqASiTaEOOR3NZP",
+                "name": "Set Variables",
+                "title": "Set Request Body",
+                "type": "core.set_multiple_variables",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": false,
+                  "display_name": "Set Request Body",
+                  "skip_execution": false,
+                  "variables_to_update": [
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_01KI0SSLGUIJ842vuUTTjgDEsfOggvEk9Ox.local.variable_workflow_01KI0SSL50NGO3ijXECbqfucQ6YmbeiBWqO$",
+                      "variable_value_new": "{\n\"OperationAdditionalData\" : {\n\"additionalData\" : [ {\n\"name\" : \"ipAddress\",\n\"value\" : \"$workflow.definition_workflow_01KI0SSLGUIJ842vuUTTjgDEsfOggvEk9Ox.input.variable_workflow_01KI0SSL50M6G6v166OWeUD0GkD2aAvpchT$\"\n},{\n\"name\" : \"policyName\",\n\"value\" : \"$workflow.definition_workflow_01KI0SSLGUIJ842vuUTTjgDEsfOggvEk9Ox.input.variable_workflow_01KI0SSL50HQ01UlhEGbbimYw5aR87iusPE$\"\n} ]\n}\n}"
+                    }
+                  ]
+                },
+                "object_type": "definition_activity"
+              }
+            ]
+          },
+          {
+            "unique_name": "definition_activity_01KI0STTLGPS44sM8LCe1MXgSEnwAl2lkNr",
+            "name": "Condition Branch",
+            "title": "Mac Address",
+            "type": "logic.condition_block",
+            "base_type": "activity",
+            "properties": {
+              "condition": {
+                "left_operand": "$activity.definition_activity_01KI0ST16JCO34iP615LGpSs8ZiEs90eLkN.output.has_match$",
+                "operator": "ne",
+                "right_operand": true
+              },
+              "continue_on_failure": false,
+              "display_name": "Mac Address",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_01KI0STYB7IFX3EdXWOI6dwS0dZnjAY14eQ",
+                "name": "Set Variables",
+                "title": "Set Request Body",
+                "type": "core.set_multiple_variables",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": false,
+                  "display_name": "Set Request Body",
+                  "skip_execution": false,
+                  "variables_to_update": [
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_01KI0SSLGUIJ842vuUTTjgDEsfOggvEk9Ox.local.variable_workflow_01KI0SSL50NGO3ijXECbqfucQ6YmbeiBWqO$",
+                      "variable_value_new": "{\n\"OperationAdditionalData\" : {\n\"additionalData\" : [ {\n\"name\" : \"macAddress\",\n\"value\" : \"$workflow.definition_workflow_01KI0SSLGUIJ842vuUTTjgDEsfOggvEk9Ox.input.variable_workflow_01KI0SSL50M6G6v166OWeUD0GkD2aAvpchT$\"\n},{\n\"name\" : \"policyName\",\n\"value\" : \"$workflow.definition_workflow_01KI0SSLGUIJ842vuUTTjgDEsfOggvEk9Ox.input.variable_workflow_01KI0SSL50HQ01UlhEGbbimYw5aR87iusPE$\"\n} ]\n}\n}"
+                    }
+                  ]
+                },
+                "object_type": "definition_activity"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "unique_name": "definition_activity_01KI0SU6XXPJL68kkvOmkjTx6hhOuGSqiPg",
+        "name": "HTTP Request",
+        "title": "ISE API REQUEST",
+        "type": "web-service.http_request",
+        "base_type": "activity",
+        "properties": {
+          "accept": "application/json",
+          "action_timeout": 180,
+          "allow_auto_redirect": true,
+          "body": "$workflow.definition_workflow_01KI0SSLGUIJ842vuUTTjgDEsfOggvEk9Ox.local.variable_workflow_01KI0SSL50NGO3ijXECbqfucQ6YmbeiBWqO$",
+          "content_type": "application/json",
+          "continue_on_error_status_code": true,
+          "continue_on_failure": false,
+          "display_name": "ISE API REQUEST",
+          "method": "PUT",
+          "relative_url": "/ancendpoint/apply",
+          "runtime_user": {
+            "override_target_runtime_user": false,
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "override_workflow_target": false,
+            "override_workflow_target_group_criteria": false,
+            "use_workflow_target": true,
+            "use_workflow_target_group": false
+          }
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_01KI0SUETMLGM0xwufrRiNLDAtYYn94SBFi",
+        "name": "Condition Block",
+        "title": "Evaluate Condition",
+        "type": "logic.if_else",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Evaluate Condition",
+          "skip_execution": false
+        },
+        "object_type": "definition_activity",
+        "blocks": [
+          {
+            "unique_name": "definition_activity_01KI0SUMXLU0I02pxFwgxYwFcNlkACe61Xm",
+            "name": "Condition Branch",
+            "title": "If Status Code == 204",
+            "type": "logic.condition_block",
+            "base_type": "activity",
+            "properties": {
+              "condition": {
+                "left_operand": {
+                  "left_operand": "$activity.definition_activity_01KI0SU6XXPJL68kkvOmkjTx6hhOuGSqiPg.output.status_code$",
+                  "operator": "gt",
+                  "right_operand": 201
+                },
+                "operator": "and",
+                "right_operand": {
+                  "left_operand": "$activity.definition_activity_01KI0SU6XXPJL68kkvOmkjTx6hhOuGSqiPg.output.status_code$",
+                  "operator": "lt",
+                  "right_operand": 205
+                }
+              },
+              "continue_on_failure": false,
+              "display_name": "If Status Code == 204",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_01KI0SURCFQRK6PjWp9nOtxABtSm8hgEFPH",
+                "name": "Completed",
+                "title": "Completed",
+                "type": "logic.completed",
+                "base_type": "activity",
+                "properties": {
+                  "completion_type": "succeeded",
+                  "continue_on_failure": false,
+                  "display_name": "Completed",
+                  "result_message": "Successfully Created Quarantine Endpoint.",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity"
+              }
+            ]
+          },
+          {
+            "unique_name": "definition_activity_01KI0SV0K3FB70vyBUKb02rlzsQvoGYzfs7",
+            "name": "Condition Branch",
+            "title": "If Status Code \u003c\u003e 204",
+            "type": "logic.condition_block",
+            "base_type": "activity",
+            "properties": {
+              "condition": {
+                "left_operand": {
+                  "left_operand": "$activity.definition_activity_01KI0SU6XXPJL68kkvOmkjTx6hhOuGSqiPg.output.status_code$",
+                  "operator": "lt",
+                  "right_operand": 201
+                },
+                "operator": "and",
+                "right_operand": {
+                  "left_operand": "$activity.definition_activity_01KI0SU6XXPJL68kkvOmkjTx6hhOuGSqiPg.output.status_code$",
+                  "operator": "gt",
+                  "right_operand": 205
+                }
+              },
+              "continue_on_failure": false,
+              "display_name": "If Status Code \u003c\u003e 204",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_01KI0SV4IOB4N6TCqPHcQ62KDNUmdbc4mI0",
+                "name": "Completed",
+                "title": "Failed",
+                "type": "logic.completed",
+                "base_type": "activity",
+                "properties": {
+                  "completion_type": "failed-completed",
+                  "continue_on_failure": false,
+                  "display_name": "Failed",
+                  "result_message": "Failed to create quarantine endpoint.\nError: $activity.definition_activity_01KI0SU6XXPJL68kkvOmkjTx6hhOuGSqiPg.output.response_body$\nStatus Text: $activity.definition_activity_01KI0SU6XXPJL68kkvOmkjTx6hhOuGSqiPg.output.status_text$",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "categories": [
+      "category_1BMfMXSnJMyt5Ihqi7rWJr5N8cf"
+    ]
+  }
+}
