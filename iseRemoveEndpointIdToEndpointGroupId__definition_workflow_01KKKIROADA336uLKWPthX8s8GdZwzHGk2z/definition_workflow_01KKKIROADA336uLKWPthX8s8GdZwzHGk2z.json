@@ -1,0 +1,150 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_01KKKIROADA336uLKWPthX8s8GdZwzHGk2z",
+    "name": "ISE Remove Endpoint ID to EndpointGroupID",
+    "title": "ISE Remove Endpoint ID to EndpointGroupID",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "id",
+          "type": "datatype.string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01KKKIRNYU9IY1oOpohXWNyczXfHQrekFR9",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "groupId",
+          "type": "datatype.string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01KKKIRNYUFK03hYp4Xo8s8tmVy7ytpfHj1",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "mac",
+          "type": "datatype.string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01KKKIRNYUD3N05Oq45tSKkgaHBF1AHE7bL",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "profileId",
+          "type": "datatype.string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01KKKIRNYUGPY0nTkY83ttWlJOIRBdLUFOH",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "json_output",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01KKKIRNYUEG87AQgb5pTZAlqlpyn934mmK",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "atomic_group": "Cisco ISE",
+        "is_atomic": true
+      },
+      "delete_workflow_instance": false,
+      "description": "This atomic add Endpoint ID to a EndpointGroupID\n\naargeris@cisco.com",
+      "display_name": "ISE Remove Endpoint ID to EndpointGroupID",
+      "runtime_user": {
+        "override_target_runtime_user": false,
+        "specify_on_workflow_start": false,
+        "target_default": true
+      },
+      "target": {
+        "target_type": "web-service.endpoint",
+        "specify_on_workflow_start": true
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_01KKKIS7C6UJ57atgNrFSVBXMo8XBWRFAtL",
+        "name": "HTTP Request",
+        "title": "ISE API REQUEST",
+        "type": "web-service.http_request",
+        "base_type": "activity",
+        "properties": {
+          "accept": "application/json",
+          "action_timeout": 180,
+          "allow_auto_redirect": true,
+          "body": "{\n  \"ERSEndPoint\" : {\n    \"mac\" : \"$workflow.definition_workflow_01KKKIROADA336uLKWPthX8s8GdZwzHGk2z.input.variable_workflow_01KKKIRNYUD3N05Oq45tSKkgaHBF1AHE7bL$\",\n    \"profileId\" : \"$workflow.definition_workflow_01KKKIROADA336uLKWPthX8s8GdZwzHGk2z.input.variable_workflow_01KKKIRNYUGPY0nTkY83ttWlJOIRBdLUFOH$\",\n    \"staticProfileAssignment\" : false,\n    \"groupId\" : \"$workflow.definition_workflow_01KKKIROADA336uLKWPthX8s8GdZwzHGk2z.input.variable_workflow_01KKKIRNYUFK03hYp4Xo8s8tmVy7ytpfHj1$\",\n    \"staticGroupAssignment\" : false\n  }\n}",
+          "content_type": "application/json",
+          "continue_on_error_status_code": true,
+          "continue_on_failure": false,
+          "display_name": "ISE API REQUEST",
+          "method": "PUT",
+          "relative_url": "/endpoint/$workflow.definition_workflow_01KKKIROADA336uLKWPthX8s8GdZwzHGk2z.input.variable_workflow_01KKKIRNYU9IY1oOpohXWNyczXfHQrekFR9$",
+          "runtime_user": {
+            "override_target_runtime_user": false,
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "override_workflow_target": false,
+            "override_workflow_target_group_criteria": false,
+            "use_workflow_target": true,
+            "use_workflow_target_group": false
+          }
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_01KKKISFQE0FE4JhkTXAgZ5h7oB6RDd3SyC",
+        "name": "Set Variables",
+        "title": "Set Variables",
+        "type": "core.set_multiple_variables",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Set Variables",
+          "skip_execution": false,
+          "variables_to_update": [
+            {
+              "variable_to_update": "$workflow.definition_workflow_01KKKIROADA336uLKWPthX8s8GdZwzHGk2z.output.variable_workflow_01KKKIRNYUEG87AQgb5pTZAlqlpyn934mmK$",
+              "variable_value_new": "$activity.definition_activity_01KKKIS7C6UJ57atgNrFSVBXMo8XBWRFAtL.output.response_body$"
+            }
+          ]
+        },
+        "object_type": "definition_activity"
+      }
+    ],
+    "categories": [
+      "category_1BMfMXSnJMyt5Ihqi7rWJr5N8cf"
+    ]
+  }
+}
