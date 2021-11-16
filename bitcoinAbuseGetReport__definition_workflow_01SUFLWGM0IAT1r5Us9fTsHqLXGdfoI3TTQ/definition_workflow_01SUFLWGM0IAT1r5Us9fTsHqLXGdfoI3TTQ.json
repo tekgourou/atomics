@@ -1,0 +1,131 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_01SUFLWGM0IAT1r5Us9fTsHqLXGdfoI3TTQ",
+    "name": "BitcoinAbuse - Get report",
+    "title": "BitcoinAbuse - Get report",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "http_status_code",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01SUGUVJAD9SA66bEA0oxJg1ZgeRFZXnWP0",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.secure_string",
+        "properties": {
+          "value": "*****",
+          "scope": "input",
+          "name": "api_key",
+          "type": "datatype.secure_string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01SUFNH416IHA7aoJyD2jMQv2Hds4fsFpsG",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "bc1qphgrzj39rthzx6ypfusfd0c0960dndq0hwcvtk",
+          "scope": "input",
+          "name": "bitcoin_address",
+          "type": "datatype.string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01SUFNPFFZ9II7OK83gQ1q0XZvuIv5PsITq",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "report",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01SUG94KQ84NZ4XuJVBSvtcFjWTb3q4Qzwl",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "is_atomic": false
+      },
+      "delete_workflow_instance": false,
+      "display_name": "BitcoinAbuse - Get report",
+      "runtime_user": {
+        "target_default": true
+      },
+      "target": {
+        "target_type": "web-service.endpoint",
+        "specify_on_workflow_start": true
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_01SUFLZIVVPI65VjZ7qFfasQH59EKUD16wF",
+        "name": "HTTP Request",
+        "title": "HTTP Request",
+        "type": "web-service.http_request",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "allow_auto_redirect": true,
+          "content_type": "application/json",
+          "continue_on_error_status_code": false,
+          "continue_on_failure": false,
+          "display_name": "HTTP Request",
+          "method": "GET",
+          "relative_url": "/reports/check?address=$workflow.definition_workflow_01SUFLWGM0IAT1r5Us9fTsHqLXGdfoI3TTQ.input.variable_workflow_01SUFNPFFZ9II7OK83gQ1q0XZvuIv5PsITq$\u0026api_token=$workflow.definition_workflow_01SUFLWGM0IAT1r5Us9fTsHqLXGdfoI3TTQ.input.variable_workflow_01SUFNH416IHA7aoJyD2jMQv2Hds4fsFpsG$",
+          "runtime_user": {
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "use_workflow_target": true
+          }
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_01SUGUAXZVHQK3VRvsc3rLTjbYj26TE03Mu",
+        "name": "Set Variables",
+        "title": "Set Variables",
+        "type": "core.set_multiple_variables",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Set Variables",
+          "skip_execution": false,
+          "variables_to_update": [
+            {
+              "variable_to_update": "$workflow.definition_workflow_01SUFLWGM0IAT1r5Us9fTsHqLXGdfoI3TTQ.output.variable_workflow_01SUG94KQ84NZ4XuJVBSvtcFjWTb3q4Qzwl$",
+              "variable_value_new": "$activity.definition_activity_01SUFLZIVVPI65VjZ7qFfasQH59EKUD16wF.output.response_body$"
+            },
+            {
+              "variable_to_update": "$workflow.definition_workflow_01SUFLWGM0IAT1r5Us9fTsHqLXGdfoI3TTQ.output.variable_workflow_01SUGUVJAD9SA66bEA0oxJg1ZgeRFZXnWP0$",
+              "variable_value_new": "$activity.definition_activity_01SUFLZIVVPI65VjZ7qFfasQH59EKUD16wF.output.status_code$"
+            }
+          ]
+        },
+        "object_type": "definition_activity"
+      }
+    ],
+    "categories": [
+      "category_1BMfMXSnJMyt5Ihqi7rWJr5N8cf"
+    ]
+  }
+}
