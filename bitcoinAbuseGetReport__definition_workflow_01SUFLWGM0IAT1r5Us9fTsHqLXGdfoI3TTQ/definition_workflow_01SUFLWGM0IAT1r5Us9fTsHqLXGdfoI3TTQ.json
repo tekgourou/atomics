@@ -10,32 +10,6 @@
         "schema_id": "datatype.string",
         "properties": {
           "value": "",
-          "scope": "output",
-          "name": "http_status_code",
-          "type": "datatype.string",
-          "is_required": false,
-          "is_invisible": false
-        },
-        "unique_name": "variable_workflow_01SUGUVJAD9SA66bEA0oxJg1ZgeRFZXnWP0",
-        "object_type": "variable_workflow"
-      },
-      {
-        "schema_id": "datatype.secure_string",
-        "properties": {
-          "value": "*****",
-          "scope": "input",
-          "name": "api_key",
-          "type": "datatype.secure_string",
-          "is_required": true,
-          "is_invisible": false
-        },
-        "unique_name": "variable_workflow_01SUFNH416IHA7aoJyD2jMQv2Hds4fsFpsG",
-        "object_type": "variable_workflow"
-      },
-      {
-        "schema_id": "datatype.string",
-        "properties": {
-          "value": "bc1qphgrzj39rthzx6ypfusfd0c0960dndq0hwcvtk",
           "scope": "input",
           "name": "bitcoin_address",
           "type": "datatype.string",
@@ -57,11 +31,38 @@
         },
         "unique_name": "variable_workflow_01SUG94KQ84NZ4XuJVBSvtcFjWTb3q4Qzwl",
         "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "http_status_code",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01SUGUVJAD9SA66bEA0oxJg1ZgeRFZXnWP0",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.secure_string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "api_key",
+          "type": "datatype.secure_string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01SUFNH416IHA7aoJyD2jMQv2Hds4fsFpsG",
+        "object_type": "variable_workflow"
       }
     ],
     "properties": {
       "atomic": {
-        "is_atomic": false
+        "atomic_group": "Bitcoin Abuse",
+        "is_atomic": true
       },
       "delete_workflow_instance": false,
       "display_name": "BitcoinAbuse - Get report",
