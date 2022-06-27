@@ -1,0 +1,194 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_01Y40HW3H1A8K0LZBNKYMIqmmJ1q0xYFhRS",
+    "name": "Kenna - Show Asset Vulnerabilities",
+    "title": "Kenna - Show Asset Vulnerabilities",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.secure_string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "API Token",
+          "type": "datatype.secure_string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01Y40HW40FKRW4qv8VKwVSCDCkyg56Y7KzG",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "Output",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01Y40HW40F3330eylIZEc7z8q7l5tdJ0v5J",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "Asset ID",
+          "type": "datatype.string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01Y40HW40FYTQ0SB81pVNjpCz28e4RlWgsH",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "atomic_group": "Kenna",
+        "is_atomic": true
+      },
+      "delete_workflow_instance": false,
+      "description": "Returns all vulnerabilities for a single asset. https://apidocs.kennasecurity.com/reference/show-asset-vulnerabilities-1",
+      "display_name": "Kenna - Show Asset Vulnerabilities",
+      "runtime_user": {
+        "target_default": true
+      },
+      "target": {
+        "target_type": "web-service.endpoint",
+        "specify_on_workflow_start": true
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_01Y40HW79HC2Y47WRz7a6YdftC9IbsO0PAa",
+        "name": "HTTP Request",
+        "title": "Get Asset Vulnerabilities",
+        "type": "web-service.http_request",
+        "base_type": "activity",
+        "properties": {
+          "accept": "application/json",
+          "action_timeout": 180,
+          "allow_auto_redirect": true,
+          "allow_headers_redirect": false,
+          "content_type": "application/json",
+          "continue_on_error_status_code": false,
+          "continue_on_failure": false,
+          "custom_headers": [
+            {
+              "name": "X-Risk-Token",
+              "value": "$workflow.definition_workflow_01Y40HW3H1A8K0LZBNKYMIqmmJ1q0xYFhRS.input.variable_workflow_01Y40HW40FKRW4qv8VKwVSCDCkyg56Y7KzG$"
+            }
+          ],
+          "display_name": "Get Asset Vulnerabilities",
+          "method": "GET",
+          "relative_url": "/assets/$workflow.definition_workflow_01Y40HW3H1A8K0LZBNKYMIqmmJ1q0xYFhRS.input.variable_workflow_01Y40HW40FYTQ0SB81pVNjpCz28e4RlWgsH$/vulnerabilities",
+          "runtime_user": {
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "use_workflow_target": true
+          }
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_01Y40HW894CWI17mAkuqvyqOhu5zCkKPrzA",
+        "name": "Condition Block",
+        "title": "Condition Block",
+        "type": "logic.if_else",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Condition Block",
+          "skip_execution": false
+        },
+        "object_type": "definition_activity",
+        "blocks": [
+          {
+            "unique_name": "definition_activity_01Y40HW9S0NXN78ixeEbePAawptDLmjY4GX",
+            "name": "Condition Branch",
+            "title": "200/Success",
+            "type": "logic.condition_block",
+            "base_type": "activity",
+            "properties": {
+              "condition": {
+                "left_operand": "$activity.definition_activity_01Y40HW79HC2Y47WRz7a6YdftC9IbsO0PAa.output.status_code$",
+                "operator": "eq",
+                "right_operand": 200
+              },
+              "continue_on_failure": false,
+              "display_name": "200/Success",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_01Y40HWAXMF5N3nl5JtfcstY22IeO83eleo",
+                "name": "Set Variables",
+                "title": "Set Variables",
+                "type": "core.set_multiple_variables",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": false,
+                  "display_name": "Set Variables",
+                  "skip_execution": false,
+                  "variables_to_update": [
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_01Y40HW3H1A8K0LZBNKYMIqmmJ1q0xYFhRS.output.variable_workflow_01Y40HW40F3330eylIZEc7z8q7l5tdJ0v5J$",
+                      "variable_value_new": "$activity.definition_activity_01Y40HW79HC2Y47WRz7a6YdftC9IbsO0PAa.output.response_body$"
+                    }
+                  ]
+                },
+                "object_type": "definition_activity"
+              }
+            ]
+          },
+          {
+            "unique_name": "definition_activity_01Y40HWC1LG7W69BXT4Bxgc4UYLFWfKHEI3",
+            "name": "Condition Branch",
+            "title": "Condition Branch",
+            "type": "logic.condition_block",
+            "base_type": "activity",
+            "properties": {
+              "condition": {
+                "left_operand": "$activity.definition_activity_01Y40HW79HC2Y47WRz7a6YdftC9IbsO0PAa.output.status_code$",
+                "operator": "ne",
+                "right_operand": 200
+              },
+              "continue_on_failure": false,
+              "display_name": "Condition Branch",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_01Y40HWDBLU3I66zHlStyrAxi5cJmI6HE24",
+                "name": "Completed",
+                "title": "Failed",
+                "type": "logic.completed",
+                "base_type": "activity",
+                "properties": {
+                  "completion_type": "failed-completed",
+                  "continue_on_failure": false,
+                  "display_name": "Failed",
+                  "result_message": "$activity.definition_activity_01Y40HW79HC2Y47WRz7a6YdftC9IbsO0PAa.output.response_body$",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "categories": [
+      "category_1BMfMXSnJMyt5Ihqi7rWJr5N8cf"
+    ]
+  }
+}
