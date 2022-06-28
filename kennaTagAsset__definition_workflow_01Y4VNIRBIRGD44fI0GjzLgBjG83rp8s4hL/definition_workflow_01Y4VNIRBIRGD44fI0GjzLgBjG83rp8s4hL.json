@@ -7,6 +7,19 @@
     "base_type": "workflow",
     "variables": [
       {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "tag",
+          "type": "datatype.string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01Y4VSVKC1PQD3iJ9skje6aeoggc9jaebRo",
+        "object_type": "variable_workflow"
+      },
+      {
         "schema_id": "datatype.integer",
         "properties": {
           "value": 0,
@@ -17,19 +30,6 @@
           "is_invisible": false
         },
         "unique_name": "variable_workflow_01Y4VNIRK8A6M52EpJaqRFXr2JzdNtwb2at",
-        "object_type": "variable_workflow"
-      },
-      {
-        "schema_id": "datatype.string",
-        "properties": {
-          "value": "",
-          "scope": "output",
-          "name": "Output",
-          "type": "datatype.string",
-          "is_required": false,
-          "is_invisible": false
-        },
-        "unique_name": "variable_workflow_01Y4VNIRK81NR4vkH0fwjFAq7VI3tXZLUJZ",
         "object_type": "variable_workflow"
       },
       {
@@ -49,13 +49,13 @@
         "schema_id": "datatype.string",
         "properties": {
           "value": "",
-          "scope": "input",
-          "name": "tag",
+          "scope": "output",
+          "name": "Output",
           "type": "datatype.string",
-          "is_required": true,
+          "is_required": false,
           "is_invisible": false
         },
-        "unique_name": "variable_workflow_01Y4VSVKC1PQD3iJ9skje6aeoggc9jaebRo",
+        "unique_name": "variable_workflow_01Y4VNIRK81NR4vkH0fwjFAq7VI3tXZLUJZ",
         "object_type": "variable_workflow"
       }
     ],
@@ -65,7 +65,7 @@
         "is_atomic": true
       },
       "delete_workflow_instance": false,
-      "description": "Update a single asset by ID with given tags or tag. Supports either an array of tags, each tag wrapped in single or double quotes, or a single string with a comma separator.\nhttps://apidocs.kennasecurity.com/reference/tag-an-asset-1",
+      "description": "Update a single asset by ID with given tag. \nhttps://apidocs.kennasecurity.com/reference/tag-an-asset-1",
       "display_name": "Kenna - Tag a Asset",
       "runtime_user": {
         "target_default": true
@@ -127,7 +127,7 @@
           {
             "unique_name": "definition_activity_01Y4VNIX0PCNA2xm4J7BOYoWmK8mpqaDMMr",
             "name": "Condition Branch",
-            "title": "200/Success",
+            "title": "204/Success",
             "type": "logic.condition_block",
             "base_type": "activity",
             "properties": {
@@ -137,7 +137,7 @@
                 "right_operand": 204
               },
               "continue_on_failure": false,
-              "display_name": "200/Success",
+              "display_name": "204/Success",
               "skip_execution": false
             },
             "object_type": "definition_activity",
