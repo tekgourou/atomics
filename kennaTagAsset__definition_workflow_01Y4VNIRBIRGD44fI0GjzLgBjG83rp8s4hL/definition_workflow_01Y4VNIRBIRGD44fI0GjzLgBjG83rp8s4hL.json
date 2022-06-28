@@ -1,0 +1,208 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_01Y4VNIRBIRGD44fI0GjzLgBjG83rp8s4hL",
+    "name": "Kenna - Tag a Asset",
+    "title": "Kenna - Tag a Asset",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.integer",
+        "properties": {
+          "value": 0,
+          "scope": "input",
+          "name": "Asset ID",
+          "type": "datatype.integer",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01Y4VNIRK8A6M52EpJaqRFXr2JzdNtwb2at",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "Output",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01Y4VNIRK81NR4vkH0fwjFAq7VI3tXZLUJZ",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.secure_string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "API Token",
+          "type": "datatype.secure_string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01Y4VNIRK7OLJ6rT8gZC5E8a2K8GmARDpig",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "tag",
+          "type": "datatype.string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01Y4VSVKC1PQD3iJ9skje6aeoggc9jaebRo",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "atomic_group": "Kenna",
+        "is_atomic": true
+      },
+      "delete_workflow_instance": false,
+      "description": "Update a single asset by ID with given tags or tag. Supports either an array of tags, each tag wrapped in single or double quotes, or a single string with a comma separator.\nhttps://apidocs.kennasecurity.com/reference/tag-an-asset-1",
+      "display_name": "Kenna - Tag a Asset",
+      "runtime_user": {
+        "target_default": true
+      },
+      "target": {
+        "target_type": "web-service.endpoint",
+        "specify_on_workflow_start": true
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_01Y4VNIU0H8BA0K2ecU2l0H3V91MQcpgRt9",
+        "name": "HTTP Request",
+        "title": "List Tags",
+        "type": "web-service.http_request",
+        "base_type": "activity",
+        "properties": {
+          "accept": "application/json",
+          "action_timeout": 180,
+          "allow_auto_redirect": true,
+          "allow_headers_redirect": false,
+          "body": "{\n      \"asset\":\n        {\n          \"tags\" : [\"$workflow.definition_workflow_01Y4VNIRBIRGD44fI0GjzLgBjG83rp8s4hL.input.variable_workflow_01Y4VSVKC1PQD3iJ9skje6aeoggc9jaebRo$\"]\n        }\n}",
+          "content_type": "application/json",
+          "continue_on_error_status_code": false,
+          "continue_on_failure": false,
+          "custom_headers": [
+            {
+              "name": "X-Risk-Token",
+              "value": "$workflow.definition_workflow_01Y4VNIRBIRGD44fI0GjzLgBjG83rp8s4hL.input.variable_workflow_01Y4VNIRK7OLJ6rT8gZC5E8a2K8GmARDpig$"
+            }
+          ],
+          "display_name": "List Tags",
+          "method": "PUT",
+          "relative_url": "/assets/$workflow.definition_workflow_01Y4VNIRBIRGD44fI0GjzLgBjG83rp8s4hL.input.variable_workflow_01Y4VNIRK8A6M52EpJaqRFXr2JzdNtwb2at$/tags",
+          "runtime_user": {
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "use_workflow_target": true
+          }
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_01Y4VNIW6YIX933IrgbE9f5odZcF8ZP6eyN",
+        "name": "Condition Block",
+        "title": "Condition Block",
+        "type": "logic.if_else",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Condition Block",
+          "skip_execution": false
+        },
+        "object_type": "definition_activity",
+        "blocks": [
+          {
+            "unique_name": "definition_activity_01Y4VNIX0PCNA2xm4J7BOYoWmK8mpqaDMMr",
+            "name": "Condition Branch",
+            "title": "200/Success",
+            "type": "logic.condition_block",
+            "base_type": "activity",
+            "properties": {
+              "condition": {
+                "left_operand": "$activity.definition_activity_01Y4VNIU0H8BA0K2ecU2l0H3V91MQcpgRt9.output.status_code$",
+                "operator": "eq",
+                "right_operand": 204
+              },
+              "continue_on_failure": false,
+              "display_name": "200/Success",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_01Y4VNIYAA7HN1k1Xs1jYan4EaKhIqvF3J7",
+                "name": "Set Variables",
+                "title": "Set Variables",
+                "type": "core.set_multiple_variables",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": false,
+                  "display_name": "Set Variables",
+                  "skip_execution": false,
+                  "variables_to_update": [
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_01Y4VNIRBIRGD44fI0GjzLgBjG83rp8s4hL.output.variable_workflow_01Y4VNIRK81NR4vkH0fwjFAq7VI3tXZLUJZ$",
+                      "variable_value_new": "$activity.definition_activity_01Y4VNIU0H8BA0K2ecU2l0H3V91MQcpgRt9.output.response_body$"
+                    }
+                  ]
+                },
+                "object_type": "definition_activity"
+              }
+            ]
+          },
+          {
+            "unique_name": "definition_activity_01Y4VNIZPZ6Y76qZTjAT3j5QVEfa4lictOq",
+            "name": "Condition Branch",
+            "title": "Condition Branch",
+            "type": "logic.condition_block",
+            "base_type": "activity",
+            "properties": {
+              "condition": {
+                "left_operand": "$activity.definition_activity_01Y4VNIU0H8BA0K2ecU2l0H3V91MQcpgRt9.output.status_code$",
+                "operator": "ne",
+                "right_operand": 200
+              },
+              "continue_on_failure": false,
+              "display_name": "Condition Branch",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_01Y4VNJ0LZKHW6E9y5qJVjduZ3VPHoN0B7B",
+                "name": "Completed",
+                "title": "Failed",
+                "type": "logic.completed",
+                "base_type": "activity",
+                "properties": {
+                  "completion_type": "failed-completed",
+                  "continue_on_failure": false,
+                  "display_name": "Failed",
+                  "result_message": "$activity.definition_activity_01Y4VNIU0H8BA0K2ecU2l0H3V91MQcpgRt9.output.response_body$",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "categories": [
+      "category_1BMfMXSnJMyt5Ihqi7rWJr5N8cf"
+    ]
+  }
+}
