@@ -1,0 +1,199 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_01YG4NMASZDBS5bdSCLBsjFbS5vGo1jU8Lr",
+    "name": "Threat Response - Incident Search ",
+    "title": "Threat Response - Incident Search ",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "search",
+          "type": "datatype.string",
+          "description": "Search for Incident entities using a ES query syntax and field filters.\n\nex : \nfrom=2022-07-11T00:00:00.104Z\nor\nfrom=2022-07-11T00:00:00.104Z\u0026status=open\n\nhttps://private.intel.amp.cisco.com/index.html#/Incident/get_ctia_incident_search",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01YG4NMB1Y84X7awIuJ4NHgutxDjDxzqVUO",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.secure_string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "Access Token",
+          "type": "datatype.secure_string",
+          "description": "An access token for the Threat Response API. This is often obtained using the \"Threat Response v2 - Generate Access Token\" atomic",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01YG4NMB1X5X714ccdyowRtPYNqFFaXlJV1",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "results_json",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01YG4QBRD7L484EewGBsWjIj3JN4O7BoR0x",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "atomic_group": "Cisco Threat Response",
+        "is_atomic": true
+      },
+      "delete_workflow_instance": false,
+      "description": "Search for Threat Response incident in your private intelligence store.\n\nAccount Key: None (uses an access token)\n\nSteps:\n[] GET the incident from Threat Response\n[]\u003e set the output variable\n\nMore information about this API: https://private.intel.amp.cisco.com/index.html#/Incident/get_ctia_incident_search",
+      "display_name": "Threat Response - Incident Search ",
+      "runtime_user": {
+        "override_target_runtime_user": false,
+        "specify_on_workflow_start": false,
+        "target_default": true
+      },
+      "target": {
+        "target_type": "web-service.endpoint",
+        "specify_on_workflow_start": true
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_01YG4NMEHISZY41Sf6LSLO1QOuxvly5pCgl",
+        "name": "HTTP Request",
+        "title": "Search incident",
+        "type": "web-service.http_request",
+        "base_type": "activity",
+        "properties": {
+          "accept": "application/json",
+          "action_timeout": 180,
+          "allow_auto_redirect": true,
+          "allow_headers_redirect": false,
+          "content_type": "application/json",
+          "continue_on_error_status_code": true,
+          "continue_on_failure": false,
+          "custom_headers": [
+            {
+              "name": "Authorization",
+              "value": "Bearer $workflow.definition_workflow_01YG4NMASZDBS5bdSCLBsjFbS5vGo1jU8Lr.input.variable_workflow_01YG4NMB1X5X714ccdyowRtPYNqFFaXlJV1$"
+            }
+          ],
+          "display_name": "Search incident",
+          "method": "GET",
+          "relative_url": "/ctia/incident/search?$workflow.definition_workflow_01YG4NMASZDBS5bdSCLBsjFbS5vGo1jU8Lr.input.variable_workflow_01YG4NMB1Y84X7awIuJ4NHgutxDjDxzqVUO$",
+          "runtime_user": {
+            "override_target_runtime_user": false,
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "use_workflow_target": true
+          }
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_01YG4NMFH4ELS6guCFwJdnqDYkQPBW4v4Z1",
+        "name": "Condition Block",
+        "title": "Was the request successful?",
+        "type": "logic.if_else",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Was the request successful?",
+          "skip_execution": false
+        },
+        "object_type": "definition_activity",
+        "blocks": [
+          {
+            "unique_name": "definition_activity_01YG4NMGET99D2hK2MxKB8D74oAwOqJGJU2",
+            "name": "Condition Branch",
+            "title": "201/Created",
+            "type": "logic.condition_block",
+            "base_type": "activity",
+            "properties": {
+              "condition": {
+                "left_operand": "$activity.definition_activity_01YG4NMEHISZY41Sf6LSLO1QOuxvly5pCgl.output.status_code$",
+                "operator": "eq",
+                "right_operand": 200
+              },
+              "continue_on_failure": false,
+              "display_name": "201/Created",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_01YG4NMJD1ZCI588wEIugfiooXOpqV0HGwc",
+                "name": "Set Variables",
+                "title": "Set output variable",
+                "type": "core.set_multiple_variables",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": false,
+                  "display_name": "Set output variable",
+                  "skip_execution": false,
+                  "variables_to_update": [
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_01YG4NMASZDBS5bdSCLBsjFbS5vGo1jU8Lr.output.variable_workflow_01YG4QBRD7L484EewGBsWjIj3JN4O7BoR0x$",
+                      "variable_value_new": "$activity.definition_activity_01YG4NMEHISZY41Sf6LSLO1QOuxvly5pCgl.output.response_body$"
+                    }
+                  ]
+                },
+                "object_type": "definition_activity"
+              }
+            ]
+          },
+          {
+            "unique_name": "definition_activity_01YG4NMKDLHE444OYBxS8AUI6hJPxmzKfoH",
+            "name": "Condition Branch",
+            "title": "Anything else",
+            "type": "logic.condition_block",
+            "base_type": "activity",
+            "properties": {
+              "condition": {
+                "left_operand": "$activity.definition_activity_01YG4NMEHISZY41Sf6LSLO1QOuxvly5pCgl.output.status_code$",
+                "operator": "ne",
+                "right_operand": 200
+              },
+              "continue_on_failure": false,
+              "display_name": "Anything else",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_01YG4NMLHXFEX0kCKoHiuk3W0C1N2BituKj",
+                "name": "Completed",
+                "title": "Failed",
+                "type": "logic.completed",
+                "base_type": "activity",
+                "properties": {
+                  "completion_type": "failed-completed",
+                  "continue_on_failure": false,
+                  "display_name": "Failed",
+                  "result_message": "Failed to create new incident\n\nStatus code: $activity.definition_activity_01YG4NMEHISZY41Sf6LSLO1QOuxvly5pCgl.output.status_code$\nResponse body: $activity.definition_activity_01YG4NMEHISZY41Sf6LSLO1QOuxvly5pCgl.output.response_body$",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "categories": [
+      "category_1BMfMXSnJMyt5Ihqi7rWJr5N8cf"
+    ]
+  }
+}
