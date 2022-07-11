@@ -10,6 +10,19 @@
         "schema_id": "datatype.string",
         "properties": {
           "value": "",
+          "scope": "output",
+          "name": "results_json",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01YG4QBRD7L484EewGBsWjIj3JN4O7BoR0x",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
           "scope": "input",
           "name": "search",
           "type": "datatype.string",
@@ -33,19 +46,6 @@
         },
         "unique_name": "variable_workflow_01YG4NMB1X5X714ccdyowRtPYNqFFaXlJV1",
         "object_type": "variable_workflow"
-      },
-      {
-        "schema_id": "datatype.string",
-        "properties": {
-          "value": "",
-          "scope": "output",
-          "name": "results_json",
-          "type": "datatype.string",
-          "is_required": false,
-          "is_invisible": false
-        },
-        "unique_name": "variable_workflow_01YG4QBRD7L484EewGBsWjIj3JN4O7BoR0x",
-        "object_type": "variable_workflow"
       }
     ],
     "properties": {
@@ -54,7 +54,7 @@
         "is_atomic": true
       },
       "delete_workflow_instance": false,
-      "description": "Search for Threat Response incident in your private intelligence store.\n\nAccount Key: None (uses an access token)\n\nSteps:\n[] GET the incident from Threat Response\n[]\u003e set the output variable\n\nMore information about this API: https://private.intel.amp.cisco.com/index.html#/Incident/get_ctia_incident_search",
+      "description": "Search for Threat Response incident in your private intelligence store.\n\nAccount Key: None (uses an access token)\n\nSteps:\n[] GET incidents from Threat Response search\n[]\u003e set the output variable\n\nMore information about this API: https://private.intel.amp.cisco.com/index.html#/Incident/get_ctia_incident_search",
       "display_name": "Threat Response - Incident Search ",
       "runtime_user": {
         "override_target_runtime_user": false,
