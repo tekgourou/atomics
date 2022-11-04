@@ -1,0 +1,202 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_0213DMXBOGY3U3MMWtdzwyZz4E1FLrNcOxv",
+    "name": "Meraki - Get Policy Objects Groups list",
+    "title": "Meraki - Get Policy Objects Groups list",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "Policy Objects Groups List",
+          "type": "datatype.string",
+          "description": "The list of Policy Objects Groups in this Organization",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_0213DMXC1LVLR4hsU4Mh1lI3UO8ApGXgrfO",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.secure_string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "Meraki API Key",
+          "type": "datatype.secure_string",
+          "description": "Your Meraki API key. This can be generated in your Meraki dashboard",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_0213DMXC1MO3N4K0wUwDZoOf71f7HBKXcxm",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "Organization ID",
+          "type": "datatype.string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_0213DRMIJ9L1L1VZIYFFkWTpXKSUtKrVVIX",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "atomic_group": "Cisco Meraki",
+        "is_atomic": true
+      },
+      "delete_workflow_instance": false,
+      "description": "Gets a list of Cisco Meraki Policy Objects Groups for a organizations that the API key provided has access to.\n\nTarget: An HTTP endpoint for \"api.meraki.com\" with a path of \"/api\"\n\nAccount Key: None (uses an API key)\n\nSteps:\n[] Request a list of Policy Objects Groups\n[] Check if the request was successful:\n[]\u003e If it was, set the output variable\n[]\u003e If it wasn't, return an error\n\nMore information about this API: https://developer.cisco.com/meraki/api-v1/#!get-organization-policy-objects-groups",
+      "display_name": "Meraki - Get Policy Objects Groups list",
+      "runtime_user": {
+        "override_target_runtime_user": false,
+        "specify_on_workflow_start": false,
+        "target_default": true
+      },
+      "target": {
+        "target_type": "web-service.endpoint",
+        "specify_on_workflow_start": true
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_0213DMXECBIIW65nRRf3dmjy2m7hdn9J4pw",
+        "name": "HTTP Request",
+        "title": "Get the Policy Objects Groups list",
+        "type": "web-service.http_request",
+        "base_type": "activity",
+        "properties": {
+          "accept": "application/json",
+          "action_timeout": 180,
+          "allow_auto_redirect": true,
+          "allow_headers_redirect": false,
+          "content_type": "application/json",
+          "continue_on_error_status_code": true,
+          "continue_on_failure": false,
+          "custom_headers": [
+            {
+              "name": "X-Cisco-Meraki-API-Key",
+              "value": "$workflow.definition_workflow_0213DMXBOGY3U3MMWtdzwyZz4E1FLrNcOxv.input.variable_workflow_0213DMXC1MO3N4K0wUwDZoOf71f7HBKXcxm$"
+            }
+          ],
+          "display_name": "Get the Policy Objects Groups list",
+          "method": "GET",
+          "relative_url": "v1/organizations/$workflow.definition_workflow_0213DMXBOGY3U3MMWtdzwyZz4E1FLrNcOxv.input.variable_workflow_0213DRMIJ9L1L1VZIYFFkWTpXKSUtKrVVIX$/policyObjects/groups",
+          "runtime_user": {
+            "override_target_runtime_user": false,
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "override_workflow_target": false,
+            "override_workflow_target_group_criteria": false,
+            "use_workflow_target": true,
+            "use_workflow_target_group": false
+          }
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_0213DMXF83VRU09mfdfDoMFhCciq8A0ILpD",
+        "name": "Condition Block",
+        "title": "Was the request successful?",
+        "type": "logic.if_else",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Was the request successful?",
+          "skip_execution": false
+        },
+        "object_type": "definition_activity",
+        "blocks": [
+          {
+            "unique_name": "definition_activity_0213DMXG0K8QN2ulDlNWIzxePlvaK5eGRi9",
+            "name": "Condition Branch",
+            "title": "Success/200",
+            "type": "logic.condition_block",
+            "base_type": "activity",
+            "properties": {
+              "condition": {
+                "left_operand": "$activity.definition_activity_0213DMXECBIIW65nRRf3dmjy2m7hdn9J4pw.output.status_code$",
+                "operator": "eq",
+                "right_operand": 200
+              },
+              "continue_on_failure": false,
+              "display_name": "Success/200",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_0213DMXH613FY12Ugpp74elgGbEQIpuKkiD",
+                "name": "Set Variables",
+                "title": "Set output variable",
+                "type": "core.set_multiple_variables",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": false,
+                  "display_name": "Set output variable",
+                  "skip_execution": false,
+                  "variables_to_update": [
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_0213DMXBOGY3U3MMWtdzwyZz4E1FLrNcOxv.output.variable_workflow_0213DMXC1LVLR4hsU4Mh1lI3UO8ApGXgrfO$",
+                      "variable_value_new": "$activity.definition_activity_0213DMXECBIIW65nRRf3dmjy2m7hdn9J4pw.output.response_body$"
+                    }
+                  ]
+                },
+                "object_type": "definition_activity"
+              }
+            ]
+          },
+          {
+            "unique_name": "definition_activity_0213DMXI7KNU62RLaGo4GiJpT111D2HQqca",
+            "name": "Condition Branch",
+            "title": "Anything else",
+            "type": "logic.condition_block",
+            "base_type": "activity",
+            "properties": {
+              "condition": {
+                "left_operand": "$activity.definition_activity_0213DMXECBIIW65nRRf3dmjy2m7hdn9J4pw.output.status_code$",
+                "operator": "ne",
+                "right_operand": 200
+              },
+              "continue_on_failure": false,
+              "display_name": "Anything else",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_0213DMXJ8E9NS6elzKzSdILL3fyGXrWCWla",
+                "name": "Completed",
+                "title": "Failed",
+                "type": "logic.completed",
+                "base_type": "activity",
+                "properties": {
+                  "completion_type": "failed-completed",
+                  "continue_on_failure": false,
+                  "display_name": "Failed",
+                  "result_message": "Status Code: $activity.definition_activity_0213DMXECBIIW65nRRf3dmjy2m7hdn9J4pw.output.status_code$\nResponse: $activity.definition_activity_0213DMXECBIIW65nRRf3dmjy2m7hdn9J4pw.output.response_body$",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "categories": [
+      "category_1BMfMXSnJMyt5Ihqi7rWJr5N8cf"
+    ]
+  }
+}
