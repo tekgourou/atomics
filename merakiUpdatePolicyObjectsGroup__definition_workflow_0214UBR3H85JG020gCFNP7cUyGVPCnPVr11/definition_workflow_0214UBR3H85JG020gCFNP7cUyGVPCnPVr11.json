@@ -1,0 +1,252 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_0214UBR3H85JG020gCFNP7cUyGVPCnPVr11",
+    "name": "Meraki - Update Policy Objects Group",
+    "title": "Meraki - Update Policy Objects Group",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "Object Group ID",
+          "type": "datatype.string",
+          "description": "The list of Policy Objects Groups in this Organization",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_0214UBR3PXF5B6mx0LxevbKutKtXPXIoAWh",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "Policy Group Name",
+          "type": "datatype.string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_0214UBR3PWL8X2QEDHkdeDT4YcFy2uCxaIA",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "Organization ID",
+          "type": "datatype.string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_0214UBR3PX5Z14e63PRFb0B30Y2slTQc7Le",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.secure_string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "Meraki API Key",
+          "type": "datatype.secure_string",
+          "description": "Your Meraki API key. This can be generated in your Meraki dashboard",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_0214UBR3PWB3U3PLRm8mYcIqus6intiHQE2",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "[]",
+          "scope": "input",
+          "name": "objectIds",
+          "type": "datatype.string",
+          "description": "default : []\nex : [\"649644246248194665\",\"649644246248194665\"]\n",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_0214UBR3PWUR8723zrnAKI5w6axe3ahCRoq",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "atomic_group": "Cisco Meraki",
+        "is_atomic": true
+      },
+      "delete_workflow_instance": false,
+      "description": "Update Policy Objects Group in Cisco Meraki organizations \nTarget: An HTTP endpoint for \"api.meraki.com\" with a path of \"/api\"\n\nAccount Key: None (uses an API key)\n\nSteps:\n[] Request to update the Policy Objects Group\n[] Check if the request was successful:\n[]\u003e If it was, set the output variable\n[]\u003e If it wasn't, return an error\n\nMore information about this API: https://developer.cisco.com/meraki/api-v1/#!update-organization-policy-objects-group",
+      "display_name": "Meraki - Update Policy Objects Group",
+      "runtime_user": {
+        "override_target_runtime_user": false,
+        "specify_on_workflow_start": false,
+        "target_default": true
+      },
+      "target": {
+        "target_type": "web-service.endpoint",
+        "specify_on_workflow_start": true
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_0214UBR658RXI61dWVaKTajF0MOdmKzkzVY",
+        "name": "HTTP Request",
+        "title": "Update Policy Objects Group",
+        "type": "web-service.http_request",
+        "base_type": "activity",
+        "properties": {
+          "accept": "application/json",
+          "action_timeout": 180,
+          "allow_auto_redirect": true,
+          "allow_headers_redirect": false,
+          "body": "{\n    \"name\": \"$workflow.definition_workflow_0214UBR3H85JG020gCFNP7cUyGVPCnPVr11.input.variable_workflow_0214UBR3PWL8X2QEDHkdeDT4YcFy2uCxaIA$\",\n    \"objectIds\": $workflow.definition_workflow_0214UBR3H85JG020gCFNP7cUyGVPCnPVr11.input.variable_workflow_0214UBR3PWUR8723zrnAKI5w6axe3ahCRoq$\n}",
+          "content_type": "application/json",
+          "continue_on_error_status_code": true,
+          "continue_on_failure": false,
+          "custom_headers": [
+            {
+              "name": "X-Cisco-Meraki-API-Key",
+              "value": "$workflow.definition_workflow_0214UBR3H85JG020gCFNP7cUyGVPCnPVr11.input.variable_workflow_0214UBR3PWB3U3PLRm8mYcIqus6intiHQE2$"
+            }
+          ],
+          "display_name": "Update Policy Objects Group",
+          "method": "PUT",
+          "relative_url": "v1/organizations/$workflow.definition_workflow_0214UBR3H85JG020gCFNP7cUyGVPCnPVr11.input.variable_workflow_0214UBR3PX5Z14e63PRFb0B30Y2slTQc7Le$/policyObjects/groups/$workflow.definition_workflow_0214UBR3H85JG020gCFNP7cUyGVPCnPVr11.input.variable_workflow_0214UBR3PXF5B6mx0LxevbKutKtXPXIoAWh$",
+          "runtime_user": {
+            "override_target_runtime_user": false,
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "override_workflow_target": false,
+            "override_workflow_target_group_criteria": false,
+            "use_workflow_target": true,
+            "use_workflow_target_group": false
+          }
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_0214UBR6VXXIS3652cd5bnJNZKJMmJHrH1o",
+        "name": "Condition Block",
+        "title": "Was the request successful?",
+        "type": "logic.if_else",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Was the request successful?",
+          "skip_execution": false
+        },
+        "object_type": "definition_activity",
+        "blocks": [
+          {
+            "unique_name": "definition_activity_0214UBR7PPM677Vzb5FIwTwcKqzNTZSIYB4",
+            "name": "Condition Branch",
+            "title": "Success/201",
+            "type": "logic.condition_block",
+            "base_type": "activity",
+            "properties": {
+              "condition": {
+                "left_operand": "$activity.definition_activity_0214UBR658RXI61dWVaKTajF0MOdmKzkzVY.output.status_code$",
+                "operator": "eq",
+                "right_operand": 201
+              },
+              "continue_on_failure": false,
+              "display_name": "Success/201",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_0214UBR8R8N9G3V9aaZUVWrVVYblfxBJJhV",
+                "name": "JSONPath Query",
+                "title": "JSONPath Query",
+                "type": "corejava.jsonpathquery",
+                "base_type": "activity",
+                "properties": {
+                  "action_timeout": 180,
+                  "continue_on_failure": false,
+                  "display_name": "JSONPath Query",
+                  "input_json": "$activity.definition_activity_0214UBR658RXI61dWVaKTajF0MOdmKzkzVY.output.response_body$",
+                  "jsonpath_queries": [
+                    {
+                      "jsonpath_query": "$.id",
+                      "jsonpath_query_name": "id",
+                      "jsonpath_query_type": "string"
+                    }
+                  ],
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_0214UBR9QNGFH0SGeBDqMPr5KNnnLt6rvAa",
+                "name": "Set Variables",
+                "title": "Set output variable",
+                "type": "core.set_multiple_variables",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": false,
+                  "display_name": "Set output variable",
+                  "skip_execution": false,
+                  "variables_to_update": [
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_0214UBR3H85JG020gCFNP7cUyGVPCnPVr11.input.variable_workflow_0214UBR3PXF5B6mx0LxevbKutKtXPXIoAWh$",
+                      "variable_value_new": "$activity.definition_activity_0214UBR8R8N9G3V9aaZUVWrVVYblfxBJJhV.output.jsonpath_queries.id$"
+                    }
+                  ]
+                },
+                "object_type": "definition_activity"
+              }
+            ]
+          },
+          {
+            "unique_name": "definition_activity_0214UBRAU5B8Q6jHLKQjBkH7r7uz3vgNHb9",
+            "name": "Condition Branch",
+            "title": "Anything else",
+            "type": "logic.condition_block",
+            "base_type": "activity",
+            "properties": {
+              "condition": {
+                "left_operand": "$activity.definition_activity_0214UBR658RXI61dWVaKTajF0MOdmKzkzVY.output.status_code$",
+                "operator": "ne",
+                "right_operand": 200
+              },
+              "continue_on_failure": false,
+              "display_name": "Anything else",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_0214UBRBWT1AP26IJ2i1bvdGhL9Bbbwh6Pv",
+                "name": "Completed",
+                "title": "Failed",
+                "type": "logic.completed",
+                "base_type": "activity",
+                "properties": {
+                  "completion_type": "failed-completed",
+                  "continue_on_failure": false,
+                  "display_name": "Failed",
+                  "result_message": "Status Code: $activity.definition_activity_0214UBR658RXI61dWVaKTajF0MOdmKzkzVY.output.status_code$\nResponse: $activity.definition_activity_0214UBR658RXI61dWVaKTajF0MOdmKzkzVY.output.response_body$",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "categories": [
+      "category_1BMfMXSnJMyt5Ihqi7rWJr5N8cf"
+    ]
+  }
+}
