@@ -1,0 +1,539 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_0213E762L4D2H49DxhAURuUy5ErN26fdcp6",
+    "name": "Meraki - Create Policy Object",
+    "title": "Meraki - Create Policy Object",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "Policy Object Name",
+          "type": "datatype.string",
+          "description": "Policy Object Name",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_0213E96GOK1BI3BjUUFBcnZlnR0F2sPwMYj",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "Policy Object ID",
+          "type": "datatype.string",
+          "description": "Policy Object OD",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_0213E762SMR5Q1MEcaPZ2Sw2wHcdbLSOMrk",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.secure_string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "Meraki API Key",
+          "type": "datatype.secure_string",
+          "description": "Your Meraki API key. This can be generated in your Meraki dashboard",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_0213E762SNBD84EMvIC1OLr0MQeyKeGTVJD",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "Organization ID",
+          "type": "datatype.string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_0213E762SN28K6DkTwpDOSbxHsqCsqq9xBO",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "type",
+          "type": "datatype.string",
+          "description": "\"cidr\" Value of a policy object (e.g. 10.11.12.1/24\") \nor \n\"fqdn\" Value of policy object (e.g. \"example.com\")",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_0213EFBY11XK65bV0Eer17xmbgIYsbpduFB",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "Policy Group ID",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_0213E762SNJJP5ZmyTlV5W2oyEKBasx3Iuf",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "Policy Object Value",
+          "type": "datatype.string",
+          "description": "Value  e.g. 10.11.12.1/32 or example.com",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_0213EGP50Y4RA5pYZGpGkrssnmjORKT2l7F",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "atomic_group": "Cisco Meraki",
+        "is_atomic": true
+      },
+      "delete_workflow_instance": false,
+      "description": "Create Policy Object in Cisco Meraki organizations \nTarget: An HTTP endpoint for \"api.meraki.com\" with a path of \"/api\"\n\nAccount Key: None (uses an API key)\n\nSteps:\n[] Request to create the Policy Object\n[] Check if the request was successful:\n[]\u003e If it was, set the output variable\n[]\u003e If it wasn't, return an error\n\nMore information about this API: https://developer.cisco.com/meraki/api-v1/#!get-organizations",
+      "display_name": "Meraki - Create Policy Object",
+      "runtime_user": {
+        "override_target_runtime_user": false,
+        "specify_on_workflow_start": false,
+        "target_default": true
+      },
+      "target": {
+        "target_type": "web-service.endpoint",
+        "specify_on_workflow_start": true
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_0213E9ZW2JV8V0n5ISkeMYcAvTOUT2sA3oi",
+        "name": "Condition Block",
+        "title": "Policy Objects Group ?",
+        "type": "logic.if_else",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Policy Objects Group ?",
+          "skip_execution": false
+        },
+        "object_type": "definition_activity",
+        "blocks": [
+          {
+            "unique_name": "definition_activity_0213E9ZWA2XK76mmYSbSigdG1QOdSvhFr9e",
+            "name": "Condition Branch",
+            "title": "yes",
+            "type": "logic.condition_block",
+            "base_type": "activity",
+            "properties": {
+              "condition": {
+                "left_operand": "$workflow.definition_workflow_0213E762L4D2H49DxhAURuUy5ErN26fdcp6.input.variable_workflow_0213E762SNJJP5ZmyTlV5W2oyEKBasx3Iuf$",
+                "operator": "ne",
+                "right_operand": ""
+              },
+              "continue_on_failure": false,
+              "display_name": "yes",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_0213E9WGEJ59F7BeRjWn9V71yzhFxaN4NEl",
+                "name": "Set Variables",
+                "title": "Set Variables Policy Group ID",
+                "type": "core.set_multiple_variables",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": false,
+                  "display_name": "Set Variables Policy Group ID",
+                  "skip_execution": false,
+                  "variables_to_update": [
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_0213E762L4D2H49DxhAURuUy5ErN26fdcp6.input.variable_workflow_0213E762SNJJP5ZmyTlV5W2oyEKBasx3Iuf$",
+                      "variable_value_new": "\"$workflow.definition_workflow_0213E762L4D2H49DxhAURuUy5ErN26fdcp6.input.variable_workflow_0213E762SNJJP5ZmyTlV5W2oyEKBasx3Iuf$\""
+                    }
+                  ]
+                },
+                "object_type": "definition_activity"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "unique_name": "definition_activity_02160VTFKNCKM0tSdjsdjAmIIXDa04ZdIft",
+        "name": "Condition Block",
+        "title": "Condition Block",
+        "type": "logic.if_else",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Condition Block",
+          "skip_execution": false
+        },
+        "object_type": "definition_activity",
+        "blocks": [
+          {
+            "unique_name": "definition_activity_02160VTFY4KIN0IqdwAnEkkqshUJpX8MeOS",
+            "name": "Condition Branch",
+            "title": "Condition Branch",
+            "type": "logic.condition_block",
+            "base_type": "activity",
+            "properties": {
+              "condition": {
+                "left_operand": "$workflow.definition_workflow_0213E762L4D2H49DxhAURuUy5ErN26fdcp6.input.variable_workflow_0213EFBY11XK65bV0Eer17xmbgIYsbpduFB$",
+                "operator": "eq",
+                "right_operand": "cidr"
+              },
+              "continue_on_failure": false,
+              "display_name": "Condition Branch",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_0213E765ICI1C46vdGLUs5pkrYolufMbj9j",
+                "name": "HTTP Request",
+                "title": "Create Policy Object",
+                "type": "web-service.http_request",
+                "base_type": "activity",
+                "properties": {
+                  "accept": "application/json",
+                  "action_timeout": 180,
+                  "allow_auto_redirect": true,
+                  "allow_headers_redirect": false,
+                  "body": "{\n    \"name\": \"$workflow.definition_workflow_0213E762L4D2H49DxhAURuUy5ErN26fdcp6.input.variable_workflow_0213E96GOK1BI3BjUUFBcnZlnR0F2sPwMYj$\",\n    \"category\": \"network\",\n    \"type\": \"$workflow.definition_workflow_0213E762L4D2H49DxhAURuUy5ErN26fdcp6.input.variable_workflow_0213EFBY11XK65bV0Eer17xmbgIYsbpduFB$\",\n    \"cidr\": \"$workflow.definition_workflow_0213E762L4D2H49DxhAURuUy5ErN26fdcp6.input.variable_workflow_0213EGP50Y4RA5pYZGpGkrssnmjORKT2l7F$\",\n    \"groupIds\": [$workflow.definition_workflow_0213E762L4D2H49DxhAURuUy5ErN26fdcp6.input.variable_workflow_0213E762SNJJP5ZmyTlV5W2oyEKBasx3Iuf$]\n}",
+                  "content_type": "application/json",
+                  "continue_on_error_status_code": true,
+                  "continue_on_failure": false,
+                  "custom_headers": [
+                    {
+                      "name": "X-Cisco-Meraki-API-Key",
+                      "value": "$workflow.definition_workflow_0213E762L4D2H49DxhAURuUy5ErN26fdcp6.input.variable_workflow_0213E762SNBD84EMvIC1OLr0MQeyKeGTVJD$"
+                    }
+                  ],
+                  "display_name": "Create Policy Object",
+                  "method": "POST",
+                  "relative_url": "v1/organizations/$workflow.definition_workflow_0213E762L4D2H49DxhAURuUy5ErN26fdcp6.input.variable_workflow_0213E762SN28K6DkTwpDOSbxHsqCsqq9xBO$/policyObjects/",
+                  "runtime_user": {
+                    "override_target_runtime_user": false,
+                    "target_default": true
+                  },
+                  "skip_execution": false,
+                  "target": {
+                    "override_workflow_target": false,
+                    "override_workflow_target_group_criteria": false,
+                    "use_workflow_target": true,
+                    "use_workflow_target_group": false
+                  }
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_0213E766NI9B66XjcFoDDwSdx3vMwSN7Jiq",
+                "name": "Condition Block",
+                "title": "Was the request successful?",
+                "type": "logic.if_else",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": false,
+                  "display_name": "Was the request successful?",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity",
+                "blocks": [
+                  {
+                    "unique_name": "definition_activity_0213E767MUW476VUGt4SE5T1S11EWnxmESI",
+                    "name": "Condition Branch",
+                    "title": "Success/201",
+                    "type": "logic.condition_block",
+                    "base_type": "activity",
+                    "properties": {
+                      "condition": {
+                        "left_operand": "$activity.definition_activity_0213E765ICI1C46vdGLUs5pkrYolufMbj9j.output.status_code$",
+                        "operator": "eq",
+                        "right_operand": 201
+                      },
+                      "continue_on_failure": false,
+                      "display_name": "Success/201",
+                      "skip_execution": false
+                    },
+                    "object_type": "definition_activity",
+                    "actions": [
+                      {
+                        "unique_name": "definition_activity_0213E7696RWTQ5n16HJUaLxbQ0bpm5aikrM",
+                        "name": "JSONPath Query",
+                        "title": "JSONPath Query",
+                        "type": "corejava.jsonpathquery",
+                        "base_type": "activity",
+                        "properties": {
+                          "action_timeout": 180,
+                          "continue_on_failure": false,
+                          "display_name": "JSONPath Query",
+                          "input_json": "$activity.definition_activity_0213E765ICI1C46vdGLUs5pkrYolufMbj9j.output.response_body$",
+                          "jsonpath_queries": [
+                            {
+                              "jsonpath_query": "$.id",
+                              "jsonpath_query_name": "id",
+                              "jsonpath_query_type": "string"
+                            }
+                          ],
+                          "skip_execution": false
+                        },
+                        "object_type": "definition_activity"
+                      },
+                      {
+                        "unique_name": "definition_activity_0213E76AHVTE66ZP19RsAKb1ZwNGCYQ6FaP",
+                        "name": "Set Variables",
+                        "title": "Set output variable",
+                        "type": "core.set_multiple_variables",
+                        "base_type": "activity",
+                        "properties": {
+                          "continue_on_failure": false,
+                          "display_name": "Set output variable",
+                          "skip_execution": false,
+                          "variables_to_update": [
+                            {
+                              "variable_to_update": "$workflow.definition_workflow_0213E762L4D2H49DxhAURuUy5ErN26fdcp6.output.variable_workflow_0213E762SMR5Q1MEcaPZ2Sw2wHcdbLSOMrk$",
+                              "variable_value_new": "$activity.definition_activity_0213E7696RWTQ5n16HJUaLxbQ0bpm5aikrM.output.jsonpath_queries.id$"
+                            }
+                          ]
+                        },
+                        "object_type": "definition_activity"
+                      }
+                    ]
+                  },
+                  {
+                    "unique_name": "definition_activity_0213E76BT36N73pLV7qxw8S4ZR4NJra7qDW",
+                    "name": "Condition Branch",
+                    "title": "Anything else",
+                    "type": "logic.condition_block",
+                    "base_type": "activity",
+                    "properties": {
+                      "condition": {
+                        "left_operand": "$activity.definition_activity_0213E765ICI1C46vdGLUs5pkrYolufMbj9j.output.status_code$",
+                        "operator": "ne",
+                        "right_operand": 201
+                      },
+                      "continue_on_failure": false,
+                      "display_name": "Anything else",
+                      "skip_execution": false
+                    },
+                    "object_type": "definition_activity",
+                    "actions": [
+                      {
+                        "unique_name": "definition_activity_0213E76D1OHOS0rRGh8w1V2CM2rxl4oNkNQ",
+                        "name": "Completed",
+                        "title": "Failed",
+                        "type": "logic.completed",
+                        "base_type": "activity",
+                        "properties": {
+                          "completion_type": "failed-completed",
+                          "continue_on_failure": false,
+                          "display_name": "Failed",
+                          "result_message": "Failed to fetch the organization list\n\nStatus Code: $activity.definition_activity_0213E765ICI1C46vdGLUs5pkrYolufMbj9j.output.status_code$\nResponse: $activity.definition_activity_0213E765ICI1C46vdGLUs5pkrYolufMbj9j.output.response_body$",
+                          "skip_execution": false
+                        },
+                        "object_type": "definition_activity"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "unique_name": "definition_activity_02160VTGAWIEM6nrN4mrbvT0WNNjyrp8h4Z",
+            "name": "Condition Branch",
+            "title": "Condition Branch",
+            "type": "logic.condition_block",
+            "base_type": "activity",
+            "properties": {
+              "condition": {
+                "left_operand": "$workflow.definition_workflow_0213E762L4D2H49DxhAURuUy5ErN26fdcp6.input.variable_workflow_0213EFBY11XK65bV0Eer17xmbgIYsbpduFB$",
+                "operator": "eq",
+                "right_operand": "fqdn"
+              },
+              "continue_on_failure": false,
+              "display_name": "Condition Branch",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_02160W1B97N884q6GUX7N0jaoFdkLyD1L0y",
+                "name": "HTTP Request",
+                "title": "Create Policy Object",
+                "type": "web-service.http_request",
+                "base_type": "activity",
+                "properties": {
+                  "accept": "application/json",
+                  "action_timeout": 180,
+                  "allow_auto_redirect": true,
+                  "allow_headers_redirect": false,
+                  "body": "{\n    \"name\": \"$workflow.definition_workflow_0213E762L4D2H49DxhAURuUy5ErN26fdcp6.input.variable_workflow_0213E96GOK1BI3BjUUFBcnZlnR0F2sPwMYj$\",\n    \"category\": \"network\",\n    \"type\": \"$workflow.definition_workflow_0213E762L4D2H49DxhAURuUy5ErN26fdcp6.input.variable_workflow_0213EFBY11XK65bV0Eer17xmbgIYsbpduFB$\",\n    \"fqdn\": \"$workflow.definition_workflow_0213E762L4D2H49DxhAURuUy5ErN26fdcp6.input.variable_workflow_0213EGP50Y4RA5pYZGpGkrssnmjORKT2l7F$\",\n    \"groupIds\": [$workflow.definition_workflow_0213E762L4D2H49DxhAURuUy5ErN26fdcp6.input.variable_workflow_0213E762SNJJP5ZmyTlV5W2oyEKBasx3Iuf$]\n}",
+                  "content_type": "application/json",
+                  "continue_on_error_status_code": true,
+                  "continue_on_failure": false,
+                  "custom_headers": [
+                    {
+                      "name": "X-Cisco-Meraki-API-Key",
+                      "value": "$workflow.definition_workflow_0213E762L4D2H49DxhAURuUy5ErN26fdcp6.input.variable_workflow_0213E762SNBD84EMvIC1OLr0MQeyKeGTVJD$"
+                    }
+                  ],
+                  "display_name": "Create Policy Object",
+                  "method": "POST",
+                  "relative_url": "v1/organizations/$workflow.definition_workflow_0213E762L4D2H49DxhAURuUy5ErN26fdcp6.input.variable_workflow_0213E762SN28K6DkTwpDOSbxHsqCsqq9xBO$/policyObjects/",
+                  "runtime_user": {
+                    "override_target_runtime_user": false,
+                    "target_default": true
+                  },
+                  "skip_execution": false,
+                  "target": {
+                    "override_workflow_target": false,
+                    "override_workflow_target_group_criteria": false,
+                    "use_workflow_target": true,
+                    "use_workflow_target_group": false
+                  }
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_02160YK2FA5EJ6lPG0vb9LCeLzscea1qpbM",
+                "name": "Condition Block",
+                "title": "Was the request successful?",
+                "type": "logic.if_else",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": false,
+                  "display_name": "Was the request successful?",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity",
+                "blocks": [
+                  {
+                    "unique_name": "definition_activity_02160YK2FAZ0S27cDhJBVO567JTikgLjZVl",
+                    "name": "Condition Branch",
+                    "title": "Success/201",
+                    "type": "logic.condition_block",
+                    "base_type": "activity",
+                    "properties": {
+                      "condition": {
+                        "left_operand": "$activity.definition_activity_02160W1B97N884q6GUX7N0jaoFdkLyD1L0y.output.status_code$",
+                        "operator": "eq",
+                        "right_operand": 201
+                      },
+                      "continue_on_failure": false,
+                      "display_name": "Success/201",
+                      "skip_execution": false
+                    },
+                    "object_type": "definition_activity",
+                    "actions": [
+                      {
+                        "unique_name": "definition_activity_02160YK2FCCB835hO9t8uhlM3Lto5nnqzZc",
+                        "name": "JSONPath Query",
+                        "title": "JSONPath Query",
+                        "type": "corejava.jsonpathquery",
+                        "base_type": "activity",
+                        "properties": {
+                          "action_timeout": 180,
+                          "continue_on_failure": false,
+                          "display_name": "JSONPath Query",
+                          "input_json": "$activity.definition_activity_02160W1B97N884q6GUX7N0jaoFdkLyD1L0y.output.response_body$",
+                          "jsonpath_queries": [
+                            {
+                              "jsonpath_query": "$.id",
+                              "jsonpath_query_name": "id",
+                              "jsonpath_query_type": "string",
+                              "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+                            }
+                          ],
+                          "skip_execution": false
+                        },
+                        "object_type": "definition_activity"
+                      },
+                      {
+                        "unique_name": "definition_activity_02160YK2FEUGA5tlJJU2QRTk9vQoVPv31Dl",
+                        "name": "Set Variables",
+                        "title": "Set output variable",
+                        "type": "core.set_multiple_variables",
+                        "base_type": "activity",
+                        "properties": {
+                          "continue_on_failure": false,
+                          "display_name": "Set output variable",
+                          "skip_execution": false,
+                          "variables_to_update": [
+                            {
+                              "variable_to_update": "$workflow.definition_workflow_0213E762L4D2H49DxhAURuUy5ErN26fdcp6.output.variable_workflow_0213E762SMR5Q1MEcaPZ2Sw2wHcdbLSOMrk$",
+                              "variable_value_new": "$activity.definition_activity_02160YK2FCCB835hO9t8uhlM3Lto5nnqzZc.output.jsonpath_queries.id$"
+                            }
+                          ]
+                        },
+                        "object_type": "definition_activity"
+                      }
+                    ]
+                  },
+                  {
+                    "unique_name": "definition_activity_02160YK2FFB5I2tPO6t6osrEK0Gxbh7uFdw",
+                    "name": "Condition Branch",
+                    "title": "Anything else",
+                    "type": "logic.condition_block",
+                    "base_type": "activity",
+                    "properties": {
+                      "condition": {
+                        "left_operand": "$activity.definition_activity_02160W1B97N884q6GUX7N0jaoFdkLyD1L0y.output.status_code$",
+                        "operator": "ne",
+                        "right_operand": 201
+                      },
+                      "continue_on_failure": false,
+                      "display_name": "Anything else",
+                      "skip_execution": false
+                    },
+                    "object_type": "definition_activity",
+                    "actions": [
+                      {
+                        "unique_name": "definition_activity_02160YK2FGG93660jB0wdcMsZlnxGYdqe6T",
+                        "name": "Completed",
+                        "title": "Failed",
+                        "type": "logic.completed",
+                        "base_type": "activity",
+                        "properties": {
+                          "completion_type": "failed-completed",
+                          "continue_on_failure": false,
+                          "display_name": "Failed",
+                          "result_message": "Failed to fetch the organization list\n\nStatus Code: $activity.definition_activity_02160W1B97N884q6GUX7N0jaoFdkLyD1L0y.output.status_code$\nResponse: $activity.definition_activity_02160W1B97N884q6GUX7N0jaoFdkLyD1L0y.output.response_body$",
+                          "skip_execution": false
+                        },
+                        "object_type": "definition_activity"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "categories": [
+      "category_1BMfMXSnJMyt5Ihqi7rWJr5N8cf"
+    ]
+  }
+}
