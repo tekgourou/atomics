@@ -1,0 +1,165 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_021N1I9D5M8TH2C8YxbTgoLEhd9ibp9wSOf",
+    "name": "QR CODE - READ from URL - goqr.me",
+    "title": "QR CODE - READ from URL - goqr.me",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "qr_code_file_url",
+          "type": "datatype.string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_021N1SNMIBJ564qkAixbyhiuB32h5FhldZc",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "output",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_021N1WK9Y99IE1d6XpMEVZSu3c1ae2ErPT3",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "data",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_021N1WTGEM9M94m18VvORQJJrmiw6jLRwrV",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "seq",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_021N1WP68AXHK3sdVN8UOkIYg6blgEMv8r4",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "is_atomic": false
+      },
+      "delete_workflow_instance": false,
+      "description": "https://goqr.me/api/doc/read-qr-code/\n\nSend a GET request of following form to our system to decode a QR code graphic (=to read a QR code from the web):\nhttp(s)://api.qrserver.com/v1/read-qr-code/?fileurl=[URL-encoded-webaddress-url-to-qrcode-image-file]\n\nTest it directly within your browser by requesting the following URL to read the QR code at http://api.qrserver.com/v1/create-qr-code/?data=HelloWorld",
+      "display_name": "QR CODE - READ from URL - goqr.me",
+      "runtime_user": {
+        "target_default": true
+      },
+      "target": {
+        "target_type": "web-service.endpoint",
+        "specify_on_workflow_start": true
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_021N1SANICAN85U0xh1oeOqocGU32t4DzP0",
+        "name": "HTTP Request",
+        "title": "API Request",
+        "type": "web-service.http_request",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "allow_auto_redirect": true,
+          "allow_headers_redirect": false,
+          "continue_on_error_status_code": false,
+          "continue_on_failure": false,
+          "display_name": "API Request",
+          "method": "GET",
+          "relative_url": "/read-qr-code/?fileurl=$workflow.definition_workflow_021N1I9D5M8TH2C8YxbTgoLEhd9ibp9wSOf.input.variable_workflow_021N1SNMIBJ564qkAixbyhiuB32h5FhldZc$",
+          "runtime_user": {
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "use_workflow_target": true
+          }
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_021N1WWTQLLDG28VnMkEx5eMGyBHOtSv7rc",
+        "name": "JSONPath Query",
+        "title": "JSONPath Query",
+        "type": "corejava.jsonpathquery",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "continue_on_failure": false,
+          "display_name": "JSONPath Query",
+          "input_json": "$activity.definition_activity_021N1SANICAN85U0xh1oeOqocGU32t4DzP0.output.response_body$",
+          "jsonpath_queries": [
+            {
+              "jsonpath_query": "$.[0].symbol.[0].seq",
+              "jsonpath_query_name": "seq",
+              "jsonpath_query_type": "string",
+              "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+            },
+            {
+              "jsonpath_query": "$.[0].symbol.[0].data",
+              "jsonpath_query_name": "data",
+              "jsonpath_query_type": "string",
+              "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+            }
+          ],
+          "skip_execution": false
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_021N1XUYZ69NU4M3mtXDknDMn3Bir35iQwS",
+        "name": "Set Variables",
+        "title": "Set Variables",
+        "type": "core.set_multiple_variables",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Set Variables",
+          "skip_execution": false,
+          "variables_to_update": [
+            {
+              "variable_to_update": "$workflow.definition_workflow_021N1I9D5M8TH2C8YxbTgoLEhd9ibp9wSOf.output.variable_workflow_021N1WK9Y99IE1d6XpMEVZSu3c1ae2ErPT3$",
+              "variable_value_new": "$activity.definition_activity_021N1SANICAN85U0xh1oeOqocGU32t4DzP0.output.response_body$"
+            },
+            {
+              "variable_to_update": "$workflow.definition_workflow_021N1I9D5M8TH2C8YxbTgoLEhd9ibp9wSOf.output.variable_workflow_021N1WP68AXHK3sdVN8UOkIYg6blgEMv8r4$",
+              "variable_value_new": "$activity.definition_activity_021N1WWTQLLDG28VnMkEx5eMGyBHOtSv7rc.output.jsonpath_queries.seq$"
+            },
+            {
+              "variable_to_update": "$workflow.definition_workflow_021N1I9D5M8TH2C8YxbTgoLEhd9ibp9wSOf.output.variable_workflow_021N1WTGEM9M94m18VvORQJJrmiw6jLRwrV$",
+              "variable_value_new": "$activity.definition_activity_021N1WWTQLLDG28VnMkEx5eMGyBHOtSv7rc.output.jsonpath_queries.data$"
+            }
+          ]
+        },
+        "object_type": "definition_activity"
+      }
+    ],
+    "categories": [
+      "category_1BMfMXSnJMyt5Ihqi7rWJr5N8cf"
+    ]
+  }
+}
