@@ -41,6 +41,7 @@
         "is_atomic": true
       },
       "delete_workflow_instance": false,
+      "description": "https://goqr.me/api/doc/create-qr-code/\n\nTARGET HOST : api.qrserver.com\nTARGET PATH : /v1\n\n",
       "display_name": "QR CODE - Create - goqr.me",
       "runtime_user": {
         "target_default": true
