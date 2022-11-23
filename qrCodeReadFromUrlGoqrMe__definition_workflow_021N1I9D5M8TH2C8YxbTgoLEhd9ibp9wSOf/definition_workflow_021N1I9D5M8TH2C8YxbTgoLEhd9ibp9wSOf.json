@@ -10,13 +10,13 @@
         "schema_id": "datatype.string",
         "properties": {
           "value": "",
-          "scope": "input",
-          "name": "qr_code_file_url",
+          "scope": "output",
+          "name": "seq",
           "type": "datatype.string",
-          "is_required": true,
+          "is_required": false,
           "is_invisible": false
         },
-        "unique_name": "variable_workflow_021N1SNMIBJ564qkAixbyhiuB32h5FhldZc",
+        "unique_name": "variable_workflow_021N1WP68AXHK3sdVN8UOkIYg6blgEMv8r4",
         "object_type": "variable_workflow"
       },
       {
@@ -49,22 +49,23 @@
         "schema_id": "datatype.string",
         "properties": {
           "value": "",
-          "scope": "output",
-          "name": "seq",
+          "scope": "input",
+          "name": "qr_code_file_url",
           "type": "datatype.string",
-          "is_required": false,
+          "is_required": true,
           "is_invisible": false
         },
-        "unique_name": "variable_workflow_021N1WP68AXHK3sdVN8UOkIYg6blgEMv8r4",
+        "unique_name": "variable_workflow_021N1SNMIBJ564qkAixbyhiuB32h5FhldZc",
         "object_type": "variable_workflow"
       }
     ],
     "properties": {
       "atomic": {
-        "is_atomic": false
+        "atomic_group": "QR CODE",
+        "is_atomic": true
       },
       "delete_workflow_instance": false,
-      "description": "https://goqr.me/api/doc/read-qr-code/\n\nSend a GET request of following form to our system to decode a QR code graphic (=to read a QR code from the web):\nhttp(s)://api.qrserver.com/v1/read-qr-code/?fileurl=[URL-encoded-webaddress-url-to-qrcode-image-file]\n\nTest it directly within your browser by requesting the following URL to read the QR code at http://api.qrserver.com/v1/create-qr-code/?data=HelloWorld",
+      "description": "https://goqr.me/api/doc/read-qr-code/\n\nSend a GET request of following form to our system to decode a QR code graphic (=to read a QR code from the web):\nhttp(s)://api.qrserver.com/v1/read-qr-code/?fileurl=[URL-encoded-webaddress-url-to-qrcode-image-file]\n\nTest it with this URL : http://api.qrserver.com/v1/create-qr-code/?data=HelloWorld\n\nTARGET HOST : api.qrserver.com\nTARGET PATH : /v1",
       "display_name": "QR CODE - READ from URL - goqr.me",
       "runtime_user": {
         "target_default": true
