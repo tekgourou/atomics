@@ -1,0 +1,88 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_021N128APYBCK2tzCGiIWdRRGe4YngsBTO4",
+    "name": "QR CODE - Create - goqr.me",
+    "title": "QR CODE - Create - goqr.me",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "input",
+          "type": "datatype.string",
+          "description": "The text to store within the QR code (URL encoded, PHP programmers may use urlencode()).\n\nMinimal charcount:\n1\nMaximal charcount:\nDepends on the ecc parameter (the more data redundancy is used, the less characters fit in your QR code) and from other factors, which are too complicated to describe here in a short way. Nevertheless up to 900 characters should work in general.\nBest practice:\nThe shorter the better. Since many older cell phones have problems with QR codes \u003eVersion 4 (that means a matrix with 33×33 modules), you should use as little data as possible. We suggest using URL shorteners like bitly for very long URLs. However, industrial scanners should have no problems regarding complex QR codes.",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_021N130RO8EUA2hIZkNEWyri24pPaNDWPse",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "200x200",
+          "scope": "input",
+          "name": "size",
+          "type": "datatype.string",
+          "description": "max : 1000x1000 ",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_021N14L6NBIJG5fsZikYqb2AaDIVoQ4eqHa",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "atomic_group": "QR CODE",
+        "is_atomic": true
+      },
+      "delete_workflow_instance": false,
+      "display_name": "QR CODE - Create - goqr.me",
+      "runtime_user": {
+        "target_default": true
+      },
+      "target": {
+        "target_type": "web-service.endpoint",
+        "specify_on_workflow_start": true
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_021N19P7Z22W20ahaDSuS5fLMXmlJcORDd6",
+        "name": "Download File",
+        "title": "API request - Create QR Code",
+        "type": "email.download_file",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "continue_on_failure": false,
+          "display_name": "API request - Create QR Code",
+          "http_request": {
+            "allow_auto_redirect": true,
+            "allow_headers_redirect": false,
+            "continue_on_error_status_code": false,
+            "method": "GET",
+            "relative_url": "create-qr-code/?data=$workflow.definition_workflow_021N128APYBCK2tzCGiIWdRRGe4YngsBTO4.input.variable_workflow_021N130RO8EUA2hIZkNEWyri24pPaNDWPse$\u0026size=$workflow.definition_workflow_021N128APYBCK2tzCGiIWdRRGe4YngsBTO4.input.variable_workflow_021N14L6NBIJG5fsZikYqb2AaDIVoQ4eqHa$"
+          },
+          "runtime_user": {
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "use_workflow_target": true
+          },
+          "target_type": "web-service.endpoint"
+        },
+        "object_type": "definition_activity"
+      }
+    ],
+    "categories": [
+      "category_1BMfMXSnJMyt5Ihqi7rWJr5N8cf"
+    ]
+  }
+}
