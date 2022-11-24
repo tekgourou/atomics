@@ -11,6 +11,32 @@
         "properties": {
           "value": "",
           "scope": "output",
+          "name": "data",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_021NNEXF263DY61tCasl0OJZR4wjh8GwRLo",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "filename",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_021NRKGZU9YKE7kjQnaEp5yTOPdaDe7L4bL",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
           "name": "output",
           "type": "datatype.string",
           "is_required": false,
@@ -24,12 +50,12 @@
         "properties": {
           "value": "",
           "scope": "output",
-          "name": "seq",
+          "name": "file_hash",
           "type": "datatype.string",
           "is_required": false,
           "is_invisible": false
         },
-        "unique_name": "variable_workflow_021NNEXF25AAG7MZBaj4C2SgLjDuOPaMRIr",
+        "unique_name": "variable_workflow_021NRKUY0NWHA7mowacvBNunxzjPL0CynUe",
         "object_type": "variable_workflow"
       },
       {
@@ -43,19 +69,6 @@
           "is_invisible": false
         },
         "unique_name": "variable_workflow_021NPK9TEDXVF5Ok92lWEcDlynQ0pXxElnO",
-        "object_type": "variable_workflow"
-      },
-      {
-        "schema_id": "datatype.string",
-        "properties": {
-          "value": "",
-          "scope": "output",
-          "name": "data",
-          "type": "datatype.string",
-          "is_required": false,
-          "is_invisible": false
-        },
-        "unique_name": "variable_workflow_021NNEXF263DY61tCasl0OJZR4wjh8GwRLo",
         "object_type": "variable_workflow"
       }
     ],
@@ -159,25 +172,6 @@
         "object_type": "definition_activity"
       },
       {
-        "unique_name": "definition_activity_021NNEXJKZR8Z2UFJOY28bvicMfOH06jwaf",
-        "name": "Set Variables",
-        "title": "Set Variables",
-        "type": "core.set_multiple_variables",
-        "base_type": "activity",
-        "properties": {
-          "continue_on_failure": false,
-          "display_name": "Set Variables",
-          "skip_execution": false,
-          "variables_to_update": [
-            {
-              "variable_to_update": "$workflow.definition_workflow_021NNEXEP6LUX3F9ugHGf9NQhQ3km7z7Hxv.output.variable_workflow_021NNEXF24TSO2x739GgCwAb7QIB1YBwdmu$",
-              "variable_value_new": "$activity.definition_activity_021NQQH9JYT951PkDTtvT04WGky95UL5Z1D.output.result_string$"
-            }
-          ]
-        },
-        "object_type": "definition_activity"
-      },
-      {
         "unique_name": "definition_activity_021NQRZ80MO5K1PExGjoQMW4qD5nCnrtEcV",
         "name": "JSONPath Query",
         "title": "JSONPath Query",
@@ -197,6 +191,33 @@
             }
           ],
           "skip_execution": false
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_021NNEXJKZR8Z2UFJOY28bvicMfOH06jwaf",
+        "name": "Set Variables",
+        "title": "Set Variables",
+        "type": "core.set_multiple_variables",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Set Variables",
+          "skip_execution": false,
+          "variables_to_update": [
+            {
+              "variable_to_update": "$workflow.definition_workflow_021NNEXEP6LUX3F9ugHGf9NQhQ3km7z7Hxv.output.variable_workflow_021NNEXF24TSO2x739GgCwAb7QIB1YBwdmu$",
+              "variable_value_new": "$activity.definition_activity_021NQRZ80MO5K1PExGjoQMW4qD5nCnrtEcV.output.jsonpath_queries.data$"
+            },
+            {
+              "variable_to_update": "$workflow.definition_workflow_021NNEXEP6LUX3F9ugHGf9NQhQ3km7z7Hxv.output.variable_workflow_021NRKGZU9YKE7kjQnaEp5yTOPdaDe7L4bL$",
+              "variable_value_new": "$activity.definition_activity_021NNI39TV50P4G8R3b9EPvCmJSnad8coRO.output.files[0].file_name$"
+            },
+            {
+              "variable_to_update": "$workflow.definition_workflow_021NNEXEP6LUX3F9ugHGf9NQhQ3km7z7Hxv.output.variable_workflow_021NRKUY0NWHA7mowacvBNunxzjPL0CynUe$",
+              "variable_value_new": "$activity.definition_activity_021NNI39TV50P4G8R3b9EPvCmJSnad8coRO.output.files[0].file_hash$"
+            }
+          ]
         },
         "object_type": "definition_activity"
       }
