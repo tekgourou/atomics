@@ -1,0 +1,213 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_01MFT85SORAV93b3M6bjiN5RaFnfJAQJ1ry",
+    "name": "Threat Response - Get Judgement",
+    "title": "Threat Response - Get Judgement",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "observable_type",
+          "type": "datatype.string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01MFTSCIPYKYE5t6Nf73jgEzMmpReVzo0PM",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "observable_value",
+          "type": "datatype.string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01MFTS8K69GTX0PptQhC865mutRx275RQPX",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.secure_string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "Access Token",
+          "type": "datatype.secure_string",
+          "description": "An access token for the Threat Response API. This is often obtained using the \"Threat Response v2 - Generate Access Token\" atomic",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01MFT85SIXBCA27bxcR0n26MJZmFiN9BRa0",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "json_output",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01MVZSJ1U6TZG4MXu1hbwHN5b0YnX2SUrrq",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "atomic_group": "Cisco Threat Response",
+        "is_atomic": true
+      },
+      "delete_workflow_instance": false,
+      "description": "Uses the Threat Response API to get judgement for observable.",
+      "display_name": "Threat Response - Get Judgement",
+      "runtime_user": {
+        "override_target_runtime_user": false,
+        "specify_on_workflow_start": false,
+        "target_default": true
+      },
+      "target": {
+        "target_type": "web-service.endpoint",
+        "specify_on_workflow_start": true
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_01MFT86UGYNN74Jd5eMnR17P1Klo3XCpWQA",
+        "name": "HTTP Request",
+        "title": "Judgement from Threat Response",
+        "type": "web-service.http_request",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "allow_auto_redirect": true,
+          "allow_headers_redirect": false,
+          "content_type": "application/json",
+          "continue_on_error_status_code": true,
+          "continue_on_failure": false,
+          "custom_headers": [
+            {
+              "name": "Authorization",
+              "value": "Bearer $workflow.definition_workflow_01MFT85SORAV93b3M6bjiN5RaFnfJAQJ1ry.input.variable_workflow_01MFT85SIXBCA27bxcR0n26MJZmFiN9BRa0$"
+            }
+          ],
+          "display_name": "Judgement from Threat Response",
+          "method": "GET",
+          "relative_url": "ctia/$workflow.definition_workflow_01MFT85SORAV93b3M6bjiN5RaFnfJAQJ1ry.input.variable_workflow_01MFTSCIPYKYE5t6Nf73jgEzMmpReVzo0PM$/$workflow.definition_workflow_01MFT85SORAV93b3M6bjiN5RaFnfJAQJ1ry.input.variable_workflow_01MFTS8K69GTX0PptQhC865mutRx275RQPX$/judgements",
+          "runtime_user": {
+            "override_target_runtime_user": false,
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "override_workflow_target": false,
+            "override_workflow_target_group_criteria": false,
+            "use_workflow_target": true,
+            "use_workflow_target_group": false
+          }
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_01MFT876Q9ECU68i2EkL0ay1SBdLSBGRTlj",
+        "name": "Condition Block",
+        "title": "Was the request successul?",
+        "type": "logic.if_else",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Was the request successul?",
+          "skip_execution": false
+        },
+        "object_type": "definition_activity",
+        "blocks": [
+          {
+            "unique_name": "definition_activity_01MFT87IK3JP822Irxu9DTTmGuaigaBmYSp",
+            "name": "Condition Branch",
+            "title": "200/Success",
+            "type": "logic.condition_block",
+            "base_type": "activity",
+            "properties": {
+              "condition": {
+                "left_operand": "$activity.definition_activity_01MFT86UGYNN74Jd5eMnR17P1Klo3XCpWQA.output.status_code$",
+                "operator": "eq",
+                "right_operand": 200
+              },
+              "continue_on_failure": false,
+              "display_name": "200/Success",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_01MFT87KW369R25UB2hS9cLzbep0IKUqSYa",
+                "name": "Set Variables",
+                "title": "Set output variable",
+                "type": "core.set_multiple_variables",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": false,
+                  "display_name": "Set output variable",
+                  "skip_execution": false,
+                  "variables_to_update": [
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_01MFT85SORAV93b3M6bjiN5RaFnfJAQJ1ry.output.variable_workflow_01MVZSJ1U6TZG4MXu1hbwHN5b0YnX2SUrrq$",
+                      "variable_value_new": "$activity.definition_activity_01MFT86UGYNN74Jd5eMnR17P1Klo3XCpWQA.output.response_body$"
+                    }
+                  ]
+                },
+                "object_type": "definition_activity"
+              }
+            ]
+          },
+          {
+            "unique_name": "definition_activity_01MFT87YBAV8834e3efa8LJ53rS2LpbPHke",
+            "name": "Condition Branch",
+            "title": "Anything else",
+            "type": "logic.condition_block",
+            "base_type": "activity",
+            "properties": {
+              "condition": {
+                "left_operand": "$activity.definition_activity_01MFT86UGYNN74Jd5eMnR17P1Klo3XCpWQA.output.status_code$",
+                "operator": "eq",
+                "right_operand": 200
+              },
+              "continue_on_failure": false,
+              "display_name": "Anything else",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_01MFT880BI35Q4UBdeTBtIj18037IOMTCtF",
+                "name": "Completed",
+                "title": "Failed",
+                "type": "logic.completed",
+                "base_type": "activity",
+                "properties": {
+                  "completion_type": "failed-completed",
+                  "continue_on_failure": false,
+                  "display_name": "Failed",
+                  "result_message": "Failed to inspect content\n\nStatus code: $activity.definition_activity_01MFT86UGYNN74Jd5eMnR17P1Klo3XCpWQA.output.status_code$\nResponse body: $activity.definition_activity_01MFT86UGYNN74Jd5eMnR17P1Klo3XCpWQA.output.response_body$",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "categories": [
+      "category_1BMfMXSnJMyt5Ihqi7rWJr5N8cf"
+    ]
+  }
+}
