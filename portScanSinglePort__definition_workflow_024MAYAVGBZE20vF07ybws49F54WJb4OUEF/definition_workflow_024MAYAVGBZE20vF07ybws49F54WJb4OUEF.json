@@ -1,0 +1,112 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_024MAYAVGBZE20vF07ybws49F54WJb4OUEF",
+    "name": "Port Scan - single port",
+    "title": "Port Scan - single port",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "IP",
+          "type": "datatype.string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_024MAYYW3005X0o2kilfB1LEHDe4Cy5j7Hc",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "port status",
+          "type": "datatype.string",
+          "description": "open or close",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_024MB1ZMBKRCB5ewEEGSs8rMsNzfI4VNsnn",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.integer",
+        "properties": {
+          "value": 0,
+          "scope": "input",
+          "name": "port",
+          "type": "datatype.integer",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_024MAZ40YY7MD4Ly0R2De8iJYNkJW0tNgaQ",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "atomic_group": "Scanner",
+        "is_atomic": true
+      },
+      "delete_workflow_instance": false,
+      "display_name": "Port Scan - single port",
+      "runtime_user": {
+        "target_default": true
+      },
+      "target": {
+        "no_target": true
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_024MAZBCCXLMZ56VO7x1FKF2J5BG6rQ2iEF",
+        "name": "Execute Python Script",
+        "title": "single port scan script",
+        "type": "python3.script",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "continue_on_failure": false,
+          "display_name": "single port scan script",
+          "script": "import socket\n\ns = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\ntarget = '$workflow.definition_workflow_024MAYAVGBZE20vF07ybws49F54WJb4OUEF.input.variable_workflow_024MAYYW3005X0o2kilfB1LEHDe4Cy5j7Hc$'\nport = $workflow.definition_workflow_024MAYAVGBZE20vF07ybws49F54WJb4OUEF.input.variable_workflow_024MAZ40YY7MD4Ly0R2De8iJYNkJW0tNgaQ$\n#target = input('What website to scan?: ')\n\ndef pscan(port):\n    try:\n        con = s.connect((target,port))\n        #print ('Port', port, 'is open')\n        port_status = 'open'\n        return port_status\n    except:\n        #print ('Port', port, 'is close')\n        port_status = 'close'\n        return port_status\n\nport_status = pscan(port)",
+          "script_queries": [
+            {
+              "script_query": "port_status",
+              "script_query_name": "port_status",
+              "script_query_type": "string"
+            }
+          ],
+          "skip_execution": false
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_024MB34I7BI1330iAEC7tK5V58VChUsMnr6",
+        "name": "Set Variables",
+        "title": "Set Variable output",
+        "type": "core.set_multiple_variables",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Set Variable output",
+          "skip_execution": false,
+          "variables_to_update": [
+            {
+              "variable_to_update": "$workflow.definition_workflow_024MAYAVGBZE20vF07ybws49F54WJb4OUEF.output.variable_workflow_024MB1ZMBKRCB5ewEEGSs8rMsNzfI4VNsnn$",
+              "variable_value_new": "$activity.definition_activity_024MAZBCCXLMZ56VO7x1FKF2J5BG6rQ2iEF.output.script_queries.port_status$"
+            }
+          ]
+        },
+        "object_type": "definition_activity"
+      }
+    ],
+    "categories": [
+      "category_1BMfMXSnJMyt5Ihqi7rWJr5N8cf"
+    ]
+  }
+}
