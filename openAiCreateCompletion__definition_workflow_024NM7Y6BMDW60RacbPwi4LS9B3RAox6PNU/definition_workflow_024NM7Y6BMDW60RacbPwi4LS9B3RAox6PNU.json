@@ -1,0 +1,249 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_024NM7Y6BMDW60RacbPwi4LS9B3RAox6PNU",
+    "name": "OpenAI - Create completion",
+    "title": "OpenAI - Create completion",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "text-davinci-003",
+          "scope": "input",
+          "name": "model",
+          "type": "datatype.string",
+          "description": "supported: text-davinci-003, text-davinci-002, text-curie-001, text-babbage-001, text-ada-001, davinci, curie, babbage, ada",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_024NM7Y6RZEFY2oCnjNu92GBGoVETGTzzlW",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "ID Response",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_024NM7Y6RZSNR2xr5BdvFtay4k7G5fc6sCN",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "Text Response",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_024NM7Y6RYNZ640Gqy4BQ4PjVQqWSyFA4OP",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.integer",
+        "properties": {
+          "value": 2000,
+          "scope": "input",
+          "name": "Output Length",
+          "type": "datatype.integer",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_024NM7Y6RYZ7M3zlFTJt86FTEWMeicGxBWu",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.secure_string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "API_key",
+          "type": "datatype.secure_string",
+          "description": "OPENAI_API_KEY",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_024NM7Y6RZ6R8413RmqIuY69qY72O2ySaCw",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "Prompt",
+          "type": "datatype.string",
+          "description": "Question to ask",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_024NM7Y6RZLQT29h5JPy7SaLGufu4HEUdvv",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "atomic_group": "OpenAI",
+        "is_atomic": true
+      },
+      "delete_workflow_instance": false,
+      "description": "Check here for target information: https://platform.openai.com/docs/api-reference/authentication (create HTTP target with no Auth and https://api.openai.com)\n\nCheck out API documentation of Completion API here: https://platform.openai.com/docs/api-reference/completions",
+      "display_name": "OpenAI - Create completion",
+      "runtime_user": {
+        "target_default": true
+      },
+      "target": {
+        "target_type": "web-service.endpoint",
+        "specify_on_workflow_start": true
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_024NM7Y8X3GL93sIkH8Q4Dvm2n98gfVEGru",
+        "name": "HTTP Request",
+        "title": "OpenAI - Create Complete Request",
+        "type": "web-service.http_request",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "allow_auto_redirect": true,
+          "allow_headers_redirect": false,
+          "body": "{\n    \"model\": \"$workflow.definition_workflow_024NM7Y6BMDW60RacbPwi4LS9B3RAox6PNU.input.variable_workflow_024NM7Y6RZEFY2oCnjNu92GBGoVETGTzzlW$\",\n    \"prompt\": \"$workflow.definition_workflow_024NM7Y6BMDW60RacbPwi4LS9B3RAox6PNU.input.variable_workflow_024NM7Y6RZLQT29h5JPy7SaLGufu4HEUdvv$\",\n    \"max_tokens\": $workflow.definition_workflow_024NM7Y6BMDW60RacbPwi4LS9B3RAox6PNU.input.variable_workflow_024NM7Y6RYZ7M3zlFTJt86FTEWMeicGxBWu$,\n    \"temperature\": 0\n  }",
+          "content_type": "application/json",
+          "continue_on_error_status_code": false,
+          "continue_on_failure": false,
+          "custom_headers": [
+            {
+              "name": "Authorization",
+              "value": "Bearer $workflow.definition_workflow_024NM7Y6BMDW60RacbPwi4LS9B3RAox6PNU.input.variable_workflow_024NM7Y6RZ6R8413RmqIuY69qY72O2ySaCw$"
+            }
+          ],
+          "display_name": "OpenAI - Create Complete Request",
+          "method": "POST",
+          "relative_url": "/v1/completions",
+          "runtime_user": {
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "use_workflow_target": true
+          }
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_024NM7Y9QEDYC6F7p1TYSFaPDx5gyyxYQeT",
+        "name": "Condition Block",
+        "title": "Error Checking: 200 OK?",
+        "type": "logic.if_else",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Error Checking: 200 OK?",
+          "skip_execution": false
+        },
+        "object_type": "definition_activity",
+        "blocks": [
+          {
+            "unique_name": "definition_activity_024NM7YAHWEYN3XR0GFFkzroj8GXuSIawu5",
+            "name": "Condition Branch",
+            "title": "NOT 200",
+            "type": "logic.condition_block",
+            "base_type": "activity",
+            "properties": {
+              "condition": {
+                "left_operand": "$activity.definition_activity_024NM7Y8X3GL93sIkH8Q4Dvm2n98gfVEGru.output.status_code$",
+                "operator": "ne",
+                "right_operand": 200
+              },
+              "continue_on_failure": false,
+              "display_name": "NOT 200",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_024NM7YBQS7Z77a6LuLkahTbQusAC7F0VUq",
+                "name": "Completed",
+                "title": "Failed",
+                "type": "logic.completed",
+                "base_type": "activity",
+                "properties": {
+                  "completion_type": "failed-completed",
+                  "continue_on_failure": false,
+                  "display_name": "Failed",
+                  "result_message": "Failed: $activity.definition_activity_024NM7Y8X3GL93sIkH8Q4Dvm2n98gfVEGru.output.status_text$",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "unique_name": "definition_activity_024NM7YCFNK0X12WI8ShWp7bkVOhi4jq8aO",
+        "name": "JSONPath Query",
+        "title": "Retrieve Text and ID from Response",
+        "type": "corejava.jsonpathquery",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "continue_on_failure": false,
+          "display_name": "Retrieve Text and ID from Response",
+          "input_json": "$activity.definition_activity_024NM7Y8X3GL93sIkH8Q4Dvm2n98gfVEGru.output.response_body$",
+          "jsonpath_queries": [
+            {
+              "jsonpath_query": "$.choices.[0].text",
+              "jsonpath_query_name": "text_response",
+              "jsonpath_query_type": "string",
+              "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+            },
+            {
+              "jsonpath_query": "$.id",
+              "jsonpath_query_name": "id",
+              "jsonpath_query_type": "string",
+              "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+            }
+          ],
+          "skip_execution": false
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_024NM7YDIOT424hcayb0PxdHJpuVeIk5Abx",
+        "name": "Set Variables",
+        "title": "Set Output Variables",
+        "type": "core.set_multiple_variables",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Set Output Variables",
+          "skip_execution": false,
+          "variables_to_update": [
+            {
+              "variable_to_update": "$workflow.definition_workflow_024NM7Y6BMDW60RacbPwi4LS9B3RAox6PNU.output.variable_workflow_024NM7Y6RYNZ640Gqy4BQ4PjVQqWSyFA4OP$",
+              "variable_value_new": "$activity.definition_activity_024NM7YCFNK0X12WI8ShWp7bkVOhi4jq8aO.output.jsonpath_queries.text_response$"
+            },
+            {
+              "variable_to_update": "$workflow.definition_workflow_024NM7Y6BMDW60RacbPwi4LS9B3RAox6PNU.output.variable_workflow_024NM7Y6RZSNR2xr5BdvFtay4k7G5fc6sCN$",
+              "variable_value_new": "$activity.definition_activity_024NM7YCFNK0X12WI8ShWp7bkVOhi4jq8aO.output.jsonpath_queries.id$"
+            }
+          ]
+        },
+        "object_type": "definition_activity"
+      }
+    ],
+    "categories": [
+      "category_1BMfMXSnJMyt5Ihqi7rWJr5N8cf"
+    ]
+  }
+}
