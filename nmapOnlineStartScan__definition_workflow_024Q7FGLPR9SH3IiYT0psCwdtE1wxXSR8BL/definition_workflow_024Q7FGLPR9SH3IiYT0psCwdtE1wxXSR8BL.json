@@ -1,0 +1,359 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_024Q7FGLPR9SH3IiYT0psCwdtE1wxXSR8BL",
+    "name": "nmap.online - start scan",
+    "title": "nmap.online - start scan",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "Expert",
+          "scope": "local",
+          "name": "nmap.online membership",
+          "type": "datatype.string",
+          "description": "Free or Expert ?\nhttps://nmap.online/pricing",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_024Q7FGMDXD6Q30Kf0cozBSRF1cUI4dJCj8",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "local",
+          "name": "scan_status",
+          "type": "datatype.string",
+          "description": "DO NOT MODIFY",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_024Q7FGMDYM2C6z5nu4tGYIUQEPdEeZcEi7",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.secure_string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "nmap.online api key",
+          "type": "datatype.secure_string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_024Q95LYM5XHO375xdH6fua7S2jmWHgkFLP",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "scan id",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_024Q7FGMDX22O7GXiMbwGseV7ByELq7d5he",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "top20tcp",
+          "scope": "input",
+          "name": "scan_command",
+          "type": "datatype.string",
+          "description": "normal - Normal Scan (nmap host)\nfast - Fast Scan\nping - Ping scan\nport - Port scan\nosinfo - Scan OS information and Traceroute\nosdetect - OS Detection\nfcrdns - Forward-confirmed Reverse DNS (Paid users only)\nfirewall - Firewall Detection (Paid users only)\ntop5port - Scan top 5 ports (Paid users only)\ntop20port - Scan top 20 ports (Paid users only)\ntop20tcp - Scan top 20 TCP ports (Paid users only)\ntop20udp - Scan top 20 UDP ports (Paid users only)\nmalware - Detecting malware infections (Paid users only)",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_024Q7FGMDY7KV78ZelgyobBWTjnIZlPaOtA",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "single",
+          "scope": "input",
+          "name": "scan_type",
+          "type": "datatype.string",
+          "description": "single - One host or IP\nrange - IP range (Paid users only)",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_024Q7LK0WLRCV1z8CDWKeug8pGZnFT7tnDV",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "np",
+          "scope": "input",
+          "name": "scan options",
+          "type": "datatype.string",
+          "description": "pn: No ping (-Pn)\nsn: No port scan (host discovery only) (-sn)\nf: Fast scan (-F)\np: All ports (-p-)\nn: no DNS lookup (-n)\nr: reverse-DNS lookup for all hosts (-R)\nf8: Fragment IP data into 8 bytes (-f)\nff16: Fragment IP data into 16 bytes (-ff)\nv: Verbose output (-v)\nvv: More verbosity (-vv)\nd: Debugging details (-d)\ndd: More details (-dd)\npr: ARP Scan (-PR)\nss: TCP SYN scan (-sS)\nst: TCP connect scan (-sT)\nsu: UDP scan (-sU)\nsnn: Null Scan (-sN)\nsff: FIN Scan (-sF)\nsxx: Xmas Scan (-sX)\nsa: TCP ACK Scan (-sA)\no: OS Detection (-O)\nsc: Default scripts (-sC)\nt0: Slowest (paranoid) (-T0)\nt1: Sneaky (-T1)\nt2: Polite (-T2)\nt3: Normal (-T3)\nt4: Aggressive (-T4)\nt5: Fastest (insane) (-T5)\nsv: Service Detection (-sV)\nsv2: Service Detection (intensity of 2) (-sV --version-light)\nsv9: Service Detection (intensity of 9) (-sV --version-all)\nreason: Getting More Details (--reason)",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_024Q7FGMDYF3C75Oj6sxWh1kZfEj1PLJyrQ",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "target",
+          "type": "datatype.string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_024Q7FGMDXLB760xVMiw7EONfUU7VUmi9xX",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "atomic_group": "nmap.online",
+        "is_atomic": true
+      },
+      "delete_workflow_instance": false,
+      "description": "Supported Observable : IP or domain only.\nWorkflow based on https://api.nmap.online/ documentation. ",
+      "display_name": "nmap.online - start scan",
+      "runtime_user": {
+        "target_default": true
+      },
+      "target": {
+        "target_type": "web-service.endpoint",
+        "specify_on_workflow_start": true
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_024Q7FGSYYMXK30WWdNSuHRyTJmsoS1hK6q",
+        "name": "Upload File",
+        "title": "Start Scan",
+        "type": "email.upload_file",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "continue_on_failure": true,
+          "display_name": "Start Scan",
+          "http_request": {
+            "allow_auto_redirect": true,
+            "allow_headers_redirect": false,
+            "body_data": {
+              "body_type": "form-data",
+              "form_data": [
+                {
+                  "key": "scan_type",
+                  "key_type": "text",
+                  "value": "$workflow.definition_workflow_024Q7FGLPR9SH3IiYT0psCwdtE1wxXSR8BL.input.variable_workflow_024Q7LK0WLRCV1z8CDWKeug8pGZnFT7tnDV$"
+                },
+                {
+                  "key": "command",
+                  "key_type": "text",
+                  "value": "$workflow.definition_workflow_024Q7FGLPR9SH3IiYT0psCwdtE1wxXSR8BL.input.variable_workflow_024Q7FGMDY7KV78ZelgyobBWTjnIZlPaOtA$"
+                },
+                {
+                  "key": "options",
+                  "key_type": "text",
+                  "value": "$workflow.definition_workflow_024Q7FGLPR9SH3IiYT0psCwdtE1wxXSR8BL.input.variable_workflow_024Q7FGMDYF3C75Oj6sxWh1kZfEj1PLJyrQ$"
+                },
+                {
+                  "key": "target",
+                  "key_type": "text",
+                  "value": "$workflow.definition_workflow_024Q7FGLPR9SH3IiYT0psCwdtE1wxXSR8BL.input.variable_workflow_024Q7FGMDXLB760xVMiw7EONfUU7VUmi9xX$"
+                },
+                {
+                  "key": "schedule",
+                  "key_type": "text",
+                  "value": "now"
+                }
+              ]
+            },
+            "content_type": "multipart/form-data",
+            "continue_on_error_status_code": false,
+            "custom_headers": [
+              {
+                "name": "NMAP-API-KEY",
+                "value": "$workflow.definition_workflow_024Q7FGLPR9SH3IiYT0psCwdtE1wxXSR8BL.input.variable_workflow_024Q95LYM5XHO375xdH6fua7S2jmWHgkFLP$"
+              }
+            ],
+            "method": "POST",
+            "relative_url": "/v01/start_scan"
+          },
+          "runtime_user": {
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "use_workflow_target": true
+          },
+          "target_type": "web-service.endpoint"
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_024Q7FGV6E65Z3sht08i1fjHSDLce2ioOLb",
+        "name": "JSONPath Query",
+        "title": "JSONPath Query for response body",
+        "type": "corejava.jsonpathquery",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "continue_on_failure": true,
+          "display_name": "JSONPath Query for response body",
+          "input_json": "$activity.definition_activity_024Q7FGSYYMXK30WWdNSuHRyTJmsoS1hK6q.output.response_body$",
+          "jsonpath_queries": [
+            {
+              "jsonpath_query": "$.response_body",
+              "jsonpath_query_name": "response_body",
+              "jsonpath_query_type": "string",
+              "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+            },
+            {
+              "jsonpath_query": "$.status_code",
+              "jsonpath_query_name": "status_code",
+              "jsonpath_query_type": "integer",
+              "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+            }
+          ],
+          "skip_execution": false
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_024Q7NDKH82250CVF6qhx5Rrr6hd3jAkZDe",
+        "name": "Condition Block",
+        "title": "Error Checking: 201 OK?",
+        "type": "logic.if_else",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Error Checking: 201 OK?",
+          "skip_execution": false
+        },
+        "object_type": "definition_activity",
+        "blocks": [
+          {
+            "unique_name": "definition_activity_024Q7NDKURM8P14FjW6xTcsLn9NTTmFwOJB",
+            "name": "Condition Branch",
+            "title": "not 201",
+            "type": "logic.condition_block",
+            "base_type": "activity",
+            "properties": {
+              "condition": {
+                "left_operand": "$activity.definition_activity_024Q7FGV6E65Z3sht08i1fjHSDLce2ioOLb.output.jsonpath_queries.status_code$",
+                "operator": "ne",
+                "right_operand": 201
+              },
+              "continue_on_failure": false,
+              "display_name": "not 201",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_024Q909RE86M55UXqgfu6ZqA8PikyT8qglu",
+                "name": "Completed",
+                "title": "Failed:",
+                "type": "logic.completed",
+                "base_type": "activity",
+                "properties": {
+                  "completion_type": "failed-completed",
+                  "continue_on_failure": false,
+                  "display_name": "Failed:",
+                  "result_message": "Failed: $activity.definition_activity_024Q7FGSYYMXK30WWdNSuHRyTJmsoS1hK6q.output.response_body$",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "unique_name": "definition_activity_024Q7FGWFQOLD3SCuIia6OYdz9v3nPBIH5L",
+        "name": "Replace String",
+        "title": "cleaning response",
+        "type": "core.replacestring",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "cleaning response",
+          "input_string": "$activity.definition_activity_024Q7FGV6E65Z3sht08i1fjHSDLce2ioOLb.output.jsonpath_queries.response_body$",
+          "replace_list": [
+            {
+              "replaced_string": "\\",
+              "replacement_string": ""
+            }
+          ],
+          "skip_execution": false
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_024Q7FGXP3NZE382otkwFuDmsvNKsaVLXvH",
+        "name": "JSONPath Query",
+        "title": "JSONPath Query for scan id",
+        "type": "corejava.jsonpathquery",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "continue_on_failure": false,
+          "display_name": "JSONPath Query for scan id",
+          "input_json": "$activity.definition_activity_024Q7FGWFQOLD3SCuIia6OYdz9v3nPBIH5L.output.result_string$",
+          "jsonpath_queries": [
+            {
+              "jsonpath_query": "$.scan_id",
+              "jsonpath_query_name": "scan_id",
+              "jsonpath_query_type": "string",
+              "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+            }
+          ],
+          "skip_execution": false
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_024Q98W36X3OW5GIlHrzh5oPksfS4w78PWl",
+        "name": "Set Variables",
+        "title": "Set Variables scan id",
+        "type": "core.set_multiple_variables",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Set Variables scan id",
+          "skip_execution": false,
+          "variables_to_update": [
+            {
+              "variable_to_update": "$workflow.definition_workflow_024Q7FGLPR9SH3IiYT0psCwdtE1wxXSR8BL.output.variable_workflow_024Q7FGMDX22O7GXiMbwGseV7ByELq7d5he$",
+              "variable_value_new": "$activity.definition_activity_024Q7FGXP3NZE382otkwFuDmsvNKsaVLXvH.output.jsonpath_queries.scan_id$"
+            }
+          ]
+        },
+        "object_type": "definition_activity"
+      }
+    ],
+    "categories": [
+      "category_01FM7CGPZZCMY0KcvgiGjVH5UaB4y4aDJ7m"
+    ]
+  },
+  "categories": {
+    "category_01FM7CGPZZCMY0KcvgiGjVH5UaB4y4aDJ7m": {
+      "unique_name": "category_01FM7CGPZZCMY0KcvgiGjVH5UaB4y4aDJ7m",
+      "name": "response",
+      "title": "response",
+      "type": "basic.category",
+      "base_type": "category",
+      "category_type": "custom",
+      "object_type": "category"
+    }
+  }
+}
