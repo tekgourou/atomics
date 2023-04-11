@@ -1,0 +1,122 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_0243J2MNC7Z2K47PDyuTWMOhkFHtwTLj8ti",
+    "name": "QR CODE - READ from base64 -goqr.me ",
+    "title": "QR CODE - READ from base64 -goqr.me ",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "data",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_024X2IFSKSNC639xHoUySX5YXji2vu77GqF",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "Image (base64)",
+          "type": "datatype.string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_0243J2MNYI20J5909CE6tnRKoycchwZ7LTn",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "atomic_group": "QR CODE",
+        "is_atomic": true
+      },
+      "delete_workflow_instance": false,
+      "description": "https://goqr.me/api/doc/read-qr-code/\n\nSend a POST request of following form to our system to decode a QR code graphic:\nhttp(s)://api.qrserver.com/v1/read-qr-code/",
+      "display_name": "QR CODE - READ from base64 -goqr.me ",
+      "runtime_user": {
+        "target_default": true
+      },
+      "target": {
+        "no_target": true
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_0243J2MPUECCZ63ewEA0wfHA3gfhYJiLbnv",
+        "name": "Execute Python Script",
+        "title": "Uploading image to base 64 API service",
+        "type": "python3.script",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "continue_on_failure": true,
+          "display_name": "Uploading image to base 64 API service",
+          "script": "import requests\nimport sys\nimport json\nimport base64\n\nimage_64_encode = '$workflow.definition_workflow_0243J2MNC7Z2K47PDyuTWMOhkFHtwTLj8ti.input.variable_workflow_0243J2MNYI20J5909CE6tnRKoycchwZ7LTn$'\nimage_64_decode = base64.b64decode((image_64_encode))\n#image_result = open('image.png', 'wb') # create a writable image and write the decoding result\n#image_result.write(image_64_decode)\n\nurl = \"http://api.qrserver.com/v1/read-qr-code/\"\n\npayload={}\nfiles=[\n  ('file',('image.png',image_64_decode,'image/png'))\n]\nheaders = {}\n\nresponse = requests.request(\"POST\", url, headers=headers, data=payload, files=files)\n\noutput = json.dumps(response.json())",
+          "script_queries": [
+            {
+              "script_query": "output",
+              "script_query_name": "output",
+              "script_query_type": "string"
+            }
+          ],
+          "skip_execution": false
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_0243J2MQLP65863ltCdVPiAu4afR8kIkPeS",
+        "name": "JSONPath Query",
+        "title": "JSONPath Query",
+        "type": "corejava.jsonpathquery",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "continue_on_failure": false,
+          "display_name": "JSONPath Query",
+          "input_json": "$activity.definition_activity_0243J2MPUECCZ63ewEA0wfHA3gfhYJiLbnv.output.script_queries.output$",
+          "jsonpath_queries": [
+            {
+              "jsonpath_query": "$.[0].symbol.[0].data",
+              "jsonpath_query_name": "data",
+              "jsonpath_query_type": "string",
+              "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+            }
+          ],
+          "skip_execution": false
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_0243J2MSP1TWF30lzBe2bMmHn5V34VBZ21Q",
+        "name": "Set Variables",
+        "title": "Set output Variables",
+        "type": "core.set_multiple_variables",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Set output Variables",
+          "skip_execution": false,
+          "variables_to_update": [
+            {
+              "variable_to_update": "$workflow.definition_workflow_0243J2MNC7Z2K47PDyuTWMOhkFHtwTLj8ti.output.variable_workflow_024X2IFSKSNC639xHoUySX5YXji2vu77GqF$",
+              "variable_value_new": "$activity.definition_activity_0243J2MQLP65863ltCdVPiAu4afR8kIkPeS.output.jsonpath_queries.data$"
+            }
+          ]
+        },
+        "object_type": "definition_activity"
+      }
+    ],
+    "categories": [
+      "category_1BMfMXSnJMyt5Ihqi7rWJr5N8cf"
+    ]
+  }
+}
